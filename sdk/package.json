@@ -2,7 +2,7 @@
   "name": "vue-sdk-analytics",
   "version": "1.0.0",
   "description": "An SDK for Vue.js analytics",
-  "main": "src/VueSDKAnalytics.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +15,10 @@
   "license": "MIT",
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.4.2",
+    "@types/lodash": "^4.14.195",
     "axios": "^1.4.0",
-    "vue": "^3.3.4"
+    "lodash": "^4.17.21",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   }
 }
