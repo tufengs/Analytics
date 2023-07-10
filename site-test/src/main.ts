@@ -6,15 +6,18 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import VueSDKAnlaytics from 'vue-sdk-analytics'
+import SDK from 'vue-sdk-analytics'
 
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(VueSDKAnlaytics, {
-    apiURL: 'http://localhost:3000',
-    apiKey: '1234567890',
+
+app.use(SDK, router, {
+    SDK_APP_ID: '52915a91-cee2-4209-80cc-0667c44c439e',
+    SDK_API_URL: 'http://localhost:3000',
+    IDLE_TIMEOUT: 5 * 60 * 1000,
 })
+
 app.use(router)
 
 app.mount('#app')

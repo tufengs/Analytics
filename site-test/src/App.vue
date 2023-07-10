@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import HelloWorld from './components/HelloWorld.vue';
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" v-tracker="'hover.LOGO'" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
       <nav>
         <RouterLink v-tracker="'click.HOME'" to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-tracker="'mouse.HERE'" to="/about">About</RouterLink>
       </nav>
+
+      <input type="text" v-tracker="'keyboard.INPUT'" />
+      <button v-tracker="'drag.BUTTON'" draggable="true">Drag Me</button>
     </div>
   </header>
 
@@ -31,11 +34,16 @@ header {
   margin: 0 auto 2rem;
 }
 
-nav {
+.wrapper {
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+}
+
+.wrapper button {
+  display: inline-block;
+  margin-top: 1rem;
 }
 
 nav a.router-link-exact-active {
