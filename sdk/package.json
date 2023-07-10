@@ -1,0 +1,21 @@
+{
+  "name": "vue-sdk-analytics",
+  "version": "1.0.0",
+  "description": "An SDK for Vue.js analytics",
+  "main": "src/VueSDKAnalytics.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "sdk",
+    "analytics"
+  ],
+  "author": "DREAM-TEAM",
+  "license": "MIT",
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^3.4.2",
+    "axios": "^1.4.0",
+    "vue": "^3.3.4"
+  }
+}
