@@ -2,7 +2,7 @@
   "name": "vue-sdk-analytics",
   "version": "1.0.0",
   "description": "An SDK for Vue.js analytics",
-  "main": "src/VueSDKAnalytics.js",
+  "main": "src/VueSDKAnalytics.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
