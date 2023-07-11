@@ -1,12 +1,22 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import {CreateUserI, LoginUserI, PasswordForgotUserI, UserI} from "@/interfaces/user";
 
 export const useUserStore = defineStore('user', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const user = ref<UserI>()
+  const users = ref<UserI[]>()
+
+  const login = async (payload: LoginUserI) => {
+
   }
 
-  return { count, doubleCount, increment }
+  const register = async (payload: CreateUserI) => {
+
+  }
+
+  const passwordForgot = async (payload: PasswordForgotUserI) => {
+
+  }
+
+  return { user, users, login, register, passwordForgot }
 })
