@@ -1,11 +1,13 @@
 import { reactive } from 'vue';
-import axios, { AxiosInstance } from 'axios';
-import { App, DirectiveBinding } from 'vue';
-import { Router, RouteLocationNormalized } from 'vue-router';
+import axios from 'axios';
 import _ from 'lodash';
-import { Options } from '../interfaces/Options';
 import { EventEnum } from '../enums/EventEnum';
 import { SendEvent } from '../functions/SendEvent';
+
+import type { AxiosInstance } from 'axios';
+import type { App, DirectiveBinding } from 'vue';
+import type { Router, RouteLocationNormalized } from 'vue-router';
+import type { Options } from '../interfaces/Options';
 
 const options: Options = reactive({
     SDK_APP_ID: '',
