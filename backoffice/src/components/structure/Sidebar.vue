@@ -2,9 +2,7 @@
   <v-card>
     <v-layout>
       <v-navigation-drawer
-        image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
         permanent
-        theme="dark"
       >
         <v-list nav>
           <v-list-item
@@ -12,18 +10,17 @@
             :prepend-icon="path.icon"
             :title="path.title"
             :value="path.value"
-            :to="path.to"
+            :to="{name: path.to}"
           />
           <v-list-item
             v-for="path in webmaster_path"
             :prepend-icon="path.icon"
             :title="path.title"
             :value="path.value"
-            :to="path.to"
+            :to="{name: path.to}"
           />
         </v-list>
       </v-navigation-drawer>
-      <v-main style="height: 250px"></v-main>
     </v-layout>
   </v-card>
 </template>
