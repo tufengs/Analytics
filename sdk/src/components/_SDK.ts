@@ -13,6 +13,7 @@ const options: Options = reactive({
     SDK_APP_ID: '',
     SDK_APP_SECRET: '',
     SDK_API_URL: '',
+    IDLE_TIMEOUT: 15 * 60 * 1000,
 });
 
 export let idleTimeout: number | null = null;
@@ -44,13 +45,24 @@ const _SDK = {
             SendEvent({ event: EventEnum.idle, tag: 'AFK' });
         }, options.IDLE_TIMEOUT ?? 15 * 60 * 1000);
 
-        const debouncedRoute = _.debounce((to: RouteLocationNormalized) => {
-            SendEvent({ event: EventEnum.navigation, tag: to.fullPath });
-        }, 2000);
+        const debouncedRoute = _.debounce(
+            ({ to, from, tag }: { to: RouteLocationNormalized, from: RouteLocationNormalized, tag: string }) => {
+                SendEvent({
+                    event: EventEnum.navigation,
+                    tag: tag,
+                    data: {
+                        to: to.fullPath,
+                        from: from.fullPath,
+                    },
+                });
+            }, 2000);
 
         router.afterEach((to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+            let tag = 'refresh'
             if (to.fullPath !== from.fullPath)
-                debouncedRoute(to);
+                tag = 'change'
+
+            debouncedRoute({ to, from, tag });
         });
 
         Vue.directive('tracker', {

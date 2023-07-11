@@ -12,7 +12,7 @@ const CheckIdle = () => {
 
     idleTimeout = setTimeout(() => {
         SendEvent({ event: EventEnum.idle, tag: 'idle' });
-    }, options.IDLE_TIMEOUT ?? 15 * 60 * 1000);
+    }, options.IDLE_TIMEOUT);
 
     setIdleTimeout(idleTimeout);
 };
