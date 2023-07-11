@@ -11,6 +11,7 @@ import type { Options } from '../interfaces/Options';
 
 const options: Options = reactive({
     SDK_APP_ID: '',
+    SDK_APP_SECRET: '',
     SDK_API_URL: '',
 });
 
