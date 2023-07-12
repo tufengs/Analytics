@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 import { EventEnum } from '../enums/EventEnum';
 import { sendEvent } from '../functions/SendEvent';
 import { checkIdle, clearIdleTimeout } from '../functions/Idle';
@@ -7,7 +7,6 @@ import { checkIdle, clearIdleTimeout } from '../functions/Idle';
 import type { App, DirectiveBinding } from 'vue';
 import type { Router, RouteLocationNormalized } from 'vue-router';
 import type { Options } from '../interfaces/Options';
-
 
 const options: Options = reactive({
     SDK_APP_ID: '',
@@ -31,7 +30,7 @@ const _SDK = {
 
         Object.assign(options, _options);
 
-        const debouncedRoute = _.debounce(
+        const debouncedRoute = debounce(
             ({ to, from, tag }: { to: RouteLocationNormalized, from: RouteLocationNormalized, tag: string }) => {
                 sendEvent({
                     event: EventEnum.navigation,
@@ -54,7 +53,7 @@ const _SDK = {
             mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
                 const [event, tag] = binding.value.split('.');
 
-                const debouncedEvent = _.debounce(() => {
+                const debouncedEvent = debounce(() => {
                     sendEvent({ event, tag });
                 }, 2000);
 
@@ -123,4 +122,4 @@ const _SDK = {
     },
 };
 
-export { _SDK, options, eventListeners };
+export { _SDK, options };

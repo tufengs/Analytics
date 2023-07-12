@@ -74,14 +74,27 @@ The EventEnum enumeration lists the supported event types for tracking:
 
 The SDK sends the following data to the API:
 
+headers : 
 ```json
 {
-    "appId": "<YOUR_APP_ID>",
-    "appSecret": "<YOUR_APP_SECRET>",
-    "event": "click",
+    "Content-Type": "application/json",
+    "App-Id": "<YOUR_APP_ID>",
+    "App-Secret": "<YOUR_APP_SECRET>",
+},
+```
+
+body :
+```json
+{
+    "event": "keyboard",
+    "tag": "INPUT",
+    
+    "host": "localhost:5173",
     "path": "/",
-    "tag": "BUTTON",
-    "timestamp": "2021-08-04T15:00:00.000Z",
-    "visitorId": "<VISITOR_ID>"
+    
+    "sessionId": "okq2363z2gosf4tn10w3amzmqzy9zc1nm",
+    "visitorId": "725e28bb61db7a8e98018fe1dee1b5f2",
+
+    "timestamp": "2023-07-12T13:02:54.139Z",
 }
 ```
