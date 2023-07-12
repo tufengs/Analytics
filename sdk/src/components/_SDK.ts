@@ -15,6 +15,7 @@ const options: Options = reactive({
     IDLE_TIMEOUT: 15 * 60 * 1000,
 });
 
+
 const eventListeners: { [key: string]: (event: Event) => void } = {};
 
 const _SDK = {
