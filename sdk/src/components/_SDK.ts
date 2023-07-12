@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive } from '@vue/reactivity';
 import { debounce } from 'lodash';
 import { EventEnum } from '../enums/EventEnum';
 import { sendEvent } from '../functions/SendEvent';
