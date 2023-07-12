@@ -20,7 +20,7 @@ const router = createRouter({
       children: [
         { path: '/login', name: 'session-login', component: () => import('../views/Session/Login.vue')},
         { path: '/register', name: 'session-register', component: () => import('../views/Session/Register.vue')},
-        { path: '/paswword-forgot', name: 'session-password-forgot', component: () => import('../views/Session/PasswordForgot.vue')}
+        { path: '/password-forgot', name: 'session-password-forgot', component: () => import('../views/Session/PasswordForgot.vue')}
       ]
     },
     {
@@ -29,8 +29,8 @@ const router = createRouter({
       component: () => import('../views/Admin.vue'),
       redirect: {name: 'admin-webmasters'},
       children: [
-        { path: '/webmasters', name: 'admin-webmasters', component: () => import('../views/Admin/WebMasterList.vue')},
-        { path: '/webmasters/request', name: 'admin-webmasters-request', component: () => import('../views/Admin/WebMasterRequest.vue')},
+        { path: 'webmasters', name: 'admin-webmasters', component: () => import('../views/Admin/WebMasterList.vue')},
+        { path: 'webmasters/request', name: 'admin-webmasters-request', component: () => import('../views/Admin/WebMasterRequest.vue')},
       ]
     },
     {
@@ -39,10 +39,10 @@ const router = createRouter({
       component: () => import('../views/Webmaster.vue'),
       redirect: {name: 'webmaster-dashboard'},
       children: [
-        { path: '/', name: 'webmaster-dashboard', component: () => import('../views/Webmaster/Dashboard.vue')},
-        { path: '/funnels', name: 'webmaster-funnels', component: () => import('../views/Webmaster/Funnels.vue')},
-        { path: '/tags', name: 'webmaster-tags', component: () => import('../views/Webmaster/Tags.vue')},
-        { path: '/profile', name: 'webmaster-profile', component: () => import('../views/Webmaster/Profile.vue')},
+        { path: '', name: 'webmaster-dashboard', component: () => import('../views/Webmaster/Dashboard.vue')},
+        { path: 'funnels', name: 'webmaster-funnels', component: () => import('../views/Webmaster/Funnels.vue')},
+        { path: 'tags', name: 'webmaster-tags', component: () => import('../views/Webmaster/Tags.vue')},
+        { path: 'profile', name: 'webmaster-profile', component: () => import('../views/Webmaster/Profile.vue')},
       ]
     },
     {
