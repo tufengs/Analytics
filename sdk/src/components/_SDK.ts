@@ -1,7 +1,8 @@
 import { reactive } from 'vue';
 import _ from 'lodash';
 import { EventEnum } from '../enums/EventEnum';
-import { SendEvent } from '../functions/SendEvent';
+import { sendEvent } from '../functions/SendEvent';
+import { checkIdle, clearIdleTimeout } from '../functions/Idle';
 
 import type { App, DirectiveBinding } from 'vue';
 import type { Router, RouteLocationNormalized } from 'vue-router';
@@ -14,12 +15,6 @@ const options: Options = reactive({
     SDK_API_URL: '',
     IDLE_TIMEOUT: 15 * 60 * 1000,
 });
-
-export let idleTimeout: number | null = null;
-
-export const setIdleTimeout = (timeout: number | null) => {
-    idleTimeout = timeout;
-};
 
 const eventListeners: { [key: string]: (event: Event) => void } = {};
 
@@ -36,13 +31,9 @@ const _SDK = {
 
         Object.assign(options, _options);
 
-        idleTimeout = setTimeout(() => {
-            SendEvent({ event: EventEnum.idle, tag: 'AFK' });
-        }, options.IDLE_TIMEOUT);
-
         const debouncedRoute = _.debounce(
             ({ to, from, tag }: { to: RouteLocationNormalized, from: RouteLocationNormalized, tag: string }) => {
-                SendEvent({
+                sendEvent({
                     event: EventEnum.navigation,
                     tag: tag,
                     data: {
@@ -57,12 +48,14 @@ const _SDK = {
                 debouncedRoute({ to, from, tag: 'change' });
         })
 
+        checkIdle();
+
         Vue.directive('tracker', {
             mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
                 const [event, tag] = binding.value.split('.');
 
                 const debouncedEvent = _.debounce(() => {
-                    SendEvent({ event, tag });
+                    sendEvent({ event, tag });
                 }, 2000);
 
                 eventListeners[binding.value] = () => {
@@ -96,9 +89,8 @@ const _SDK = {
                 }
             },
             beforeUnmount(el: HTMLElement, binding: DirectiveBinding<string>) {
-                if (idleTimeout !== null) {
-                    clearTimeout(idleTimeout);
-                }
+                clearIdleTimeout();
+
                 const [event] = binding.value.split('.');
                 switch (event) {
                     case EventEnum.click:

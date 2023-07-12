@@ -1,9 +1,9 @@
 import { options } from "../components/_SDK";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
-import { CheckIdle } from "./CheckIdle";
+import { checkIdle } from "./Idle";
 import axios from "axios";
 
-const SendEvent = async (data: { event: string, tag: string, data?: object | string | undefined }) => {
+const sendEvent = async (data: { event: string, tag: string, data?: object | string | undefined }) => {
     const fp = await FingerprintJS.load();
     const result = await fp.get();
     const visitorId = result.visitorId;
@@ -25,7 +25,7 @@ const SendEvent = async (data: { event: string, tag: string, data?: object | str
     };
 
     try {
-        CheckIdle();
+        checkIdle();
 
         await axios
             .post(`${options.SDK_API_URL}/api/events`,
@@ -44,4 +44,4 @@ const SendEvent = async (data: { event: string, tag: string, data?: object | str
     }
 };
 
-export { SendEvent };
+export { sendEvent };
