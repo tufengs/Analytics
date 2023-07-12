@@ -67,7 +67,7 @@ const _SDK = {
                         break;
 
                     case EventEnum.hover:
-                        el.addEventListener('mouseleave', eventListeners[binding.value]);
+                        el.addEventListener('mouseenter', eventListeners[binding.value]);
                         break;
 
                     case EventEnum.mouse:
