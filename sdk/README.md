@@ -72,7 +72,7 @@ The EventEnum enumeration lists the supported event types for tracking:
 
 ## Output
 
-The SDK sends the following data to the API:
+The SDK sends the following data to the API (YOUR_API_URL):
 
 headers : 
 ```json
@@ -92,8 +92,8 @@ body :
     "host": "localhost:5173",
     "path": "/",
     
-    "sessionId": "okq2363z2gosf4tn10w3amzmqzy9zc1nm",
-    "visitorId": "725e28bb61db7a8e98018fe1dee1b5f2",
+    "sessionId": "<SESSION_ID>",
+    "visitorId": "<VISITOR_ID>",
 
     "timestamp": "2023-07-12T13:02:54.139Z",
 }

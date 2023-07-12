@@ -1,6 +1,6 @@
 {
   "name": "vue-sdk-analytics",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An SDK for Vue.js analytics",
   "main": "src/index.ts",
   "scripts": {
