@@ -16,16 +16,20 @@ exports.DataService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const data_schema_1 = require("./schemas/data.schema");
+const event_schema_1 = require("./schemas/event.schema");
 let DataService = class DataService {
-    constructor(dataModel) {
-        this.dataModel = dataModel;
+    constructor(connection) {
+        this.connection = connection;
     }
-    create(createDatumDto) {
-        return this.dataModel.find();
+    async create(createDatumDto) {
+        console.log(createDatumDto);
+        return this.connection.model(event_schema_1.Event.name).create(createDatumDto);
+    }
+    findAllByApp(app_id, app_secret) {
+        return this.connection.model(event_schema_1.Event.name).find({ app_id, app_secret });
     }
     findAll() {
-        return this.dataModel.find();
+        return this.connection.model(event_schema_1.Event.name).find({});
     }
     findOne(id) {
         return `This action returns a #${id} datum`;
@@ -39,8 +43,8 @@ let DataService = class DataService {
 };
 DataService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(data_schema_1.Data.name, 'data')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(0, (0, mongoose_1.InjectConnection)()),
+    __metadata("design:paramtypes", [mongoose_2.Connection])
 ], DataService);
 exports.DataService = DataService;
 //# sourceMappingURL=data.service.js.map

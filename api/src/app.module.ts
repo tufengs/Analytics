@@ -9,25 +9,23 @@ import { ConfigService, ConfigModule } from '@nestjs/config/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataModule } from './data/data.module';
-import { Data, DataSchema } from './data/schemas/data.schema';
-import { DataService } from './data/data.service';
-import { DataController } from './data/data.controller';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get('MONGODB_URL'),
-      }),
-      inject: [ConfigService],
-    }),
-    MongooseModule.forFeature([{ name: 'data', schema: DataSchema }]),
     UsersModule,
     AuthModule,
     JwtModule,
     DataModule,
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get('MONGODB_URL'),
+        dbName: 'db',
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService, UsersService, PrismaService, ConfigService],
+  providers: [AppService, PrismaService, ConfigService],
 })
 export class AppModule {}

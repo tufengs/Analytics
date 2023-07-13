@@ -29,17 +29,10 @@ import { UpdateDatumDto } from './dto/update-datum.dto';
 export declare class DataController {
     private readonly dataService;
     constructor(dataService: DataService);
-    create(createDatumDto: CreateDatumDto): import("mongoose").Query<(import("mongoose").Document<unknown, {}, import("./schemas/data.schema").Data> & import("./schemas/data.schema").Data & {
-        _id: import("mongoose").Types.ObjectId;
-    })[], import("mongoose").Document<unknown, {}, import("./schemas/data.schema").Data> & import("./schemas/data.schema").Data & {
-        _id: import("mongoose").Types.ObjectId;
-    }, {}, import("./schemas/data.schema").Data, "find">;
-    findAll(): import("mongoose").Query<(import("mongoose").Document<unknown, {}, import("./schemas/data.schema").Data> & import("./schemas/data.schema").Data & {
-        _id: import("mongoose").Types.ObjectId;
-    })[], import("mongoose").Document<unknown, {}, import("./schemas/data.schema").Data> & import("./schemas/data.schema").Data & {
-        _id: import("mongoose").Types.ObjectId;
-    }, {}, import("./schemas/data.schema").Data, "find">;
+    create(headers: any, createDatumDto: CreateDatumDto): Promise<any>;
+    findAll(headers: any): import("mongoose").Query<any[], any, unknown, any, "find">;
+    findAllAdmin(): import("mongoose").Query<any[], any, unknown, any, "find">;
     findOne(id: string): string;
-    update(id: string, updateDatumDto: UpdateDatumDto): string;
+    update(headers: any, id: string, updateDatumDto: UpdateDatumDto): string;
     remove(id: string): string;
 }

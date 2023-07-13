@@ -10,10 +10,28 @@ exports.DataModule = void 0;
 const common_1 = require("@nestjs/common");
 const data_service_1 = require("./data.service");
 const data_controller_1 = require("./data.controller");
+const mongoose_1 = require("@nestjs/mongoose");
+const config_1 = require("@nestjs/config");
+const event_schema_1 = require("./schemas/event.schema");
 let DataModule = class DataModule {
 };
 DataModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: event_schema_1.Event.name,
+                    useFactory: () => {
+                        const schema = event_schema_1.EventSchema;
+                        schema.pre('save', function () {
+                            console.log('Hello from pre save');
+                        });
+                        return schema;
+                    },
+                    inject: [config_1.ConfigService],
+                },
+            ]),
+        ],
         controllers: [data_controller_1.DataController],
         providers: [data_service_1.DataService],
     })

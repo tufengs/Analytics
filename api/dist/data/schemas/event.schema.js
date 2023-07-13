@@ -62,4 +62,4 @@ Event = __decorate([
 ], Event);
 exports.Event = Event;
 exports.EventSchema = mongoose_1.SchemaFactory.createForClass(Event);
-//# sourceMappingURL=data.schema.js.map
+//# sourceMappingURL=event.schema.js.map

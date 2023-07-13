@@ -24,21 +24,13 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { CreateDatumDto } from './dto/create-datum.dto';
 import { UpdateDatumDto } from './dto/update-datum.dto';
-import { Model } from 'mongoose';
-import { Data } from './schemas/data.schema';
+import { Connection } from 'mongoose';
 export declare class DataService {
-    private dataModel;
-    constructor(dataModel: Model<Data>);
-    create(createDatumDto: CreateDatumDto): import("mongoose").Query<(import("mongoose").Document<unknown, {}, Data> & Data & {
-        _id: import("mongoose").Types.ObjectId;
-    })[], import("mongoose").Document<unknown, {}, Data> & Data & {
-        _id: import("mongoose").Types.ObjectId;
-    }, {}, Data, "find">;
-    findAll(): import("mongoose").Query<(import("mongoose").Document<unknown, {}, Data> & Data & {
-        _id: import("mongoose").Types.ObjectId;
-    })[], import("mongoose").Document<unknown, {}, Data> & Data & {
-        _id: import("mongoose").Types.ObjectId;
-    }, {}, Data, "find">;
+    private connection;
+    constructor(connection: Connection);
+    create(createDatumDto: CreateDatumDto): Promise<any>;
+    findAllByApp(app_id: string, app_secret: string): import("mongoose").Query<any[], any, unknown, any, "find">;
+    findAll(): import("mongoose").Query<any[], any, unknown, any, "find">;
     findOne(id: number): string;
     update(id: number, updateDatumDto: UpdateDatumDto): string;
     remove(id: number): string;
