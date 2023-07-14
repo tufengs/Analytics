@@ -23,9 +23,6 @@ const debouncePosition = debounce(() => {
     for (const [key, value] of Object.entries(eventPositions)) {
       if (!value.length) continue;
 
-      console.log(sizeof(compressPoints(value)) + ' bytes ', compressPoints(value))
-      console.log(sizeof(value) + ' bytes', value)
-
       sendEvent({
         event: EventEnum.mouse,
         tag: key,
@@ -66,7 +63,7 @@ const StopMouseTracker = () => {
 }
 
 function compressPoints(points: { x: number, y: number }[]) {
-  const compressed: { x: number, y: number, v: number }[] = [];
+  const compressed: { x: number, y: number, value: number }[] = [];
 
   const grid: number = 5;
 
@@ -88,9 +85,9 @@ function compressPoints(points: { x: number, y: number }[]) {
     );
 
     if (existingPoint) {
-      existingPoint.v++;
+      existingPoint.value++;
     } else {
-      compressed.push({ ...adjustedPoint, v: 1 });
+      compressed.push({ ...adjustedPoint, value: 1 });
     }
   }
 
