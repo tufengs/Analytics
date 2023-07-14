@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { EventEnum } from '../enums/EventEnum';
 import { sendEvent } from '../functions/SendEvent';
 import { checkIdle, clearIdleTimeout } from '../functions/Idle';
+import { MouseTracker, StopMouseTracker } from './MouseTracker';
 
 import type { App, DirectiveBinding } from 'vue';
 import type { Router, RouteLocationNormalized } from 'vue-router';
@@ -15,11 +16,10 @@ const options: Options = reactive({
     IDLE_TIMEOUT: 15 * 60 * 1000,
 });
 
-
 const eventListeners: { [key: string]: (event: Event) => void } = {};
 
 const _SDK = {
-    install: (Vue: App, router: Router, _options: Options) => {
+    install: (Vue: App, router: Router, _options: Options, _mouseTrackingOptions?: any) => {
 
         const requiredOptions = ['SDK_APP_ID', 'SDK_APP_SECRET', 'SDK_API_URL'];
 
@@ -44,11 +44,18 @@ const _SDK = {
             }, 2000);
 
         router.afterEach((to, from) => {
+            if (_mouseTrackingOptions?.pages) {
+                if (_mouseTrackingOptions.pages.includes(router.currentRoute.value.path))
+                    MouseTracker();
+                else
+                    StopMouseTracker();
+            }
             if (to.fullPath !== from.fullPath)
                 debouncedRoute({ to, from, tag: 'change' });
         })
 
         checkIdle();
+
 
         Vue.directive('tracker', {
             mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
