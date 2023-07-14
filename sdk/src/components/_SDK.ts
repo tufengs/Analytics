@@ -16,20 +16,10 @@ const options: Options = reactive({
     IDLE_TIMEOUT: 15 * 60 * 1000,
 });
 
-//const router: Router = reactive(null);
-let router: Router | null = null;
-
 const eventListeners: { [key: string]: (event: Event) => void } = {};
 
 const _SDK = {
     install: (Vue: App, _router: Router, _options: Options, _mouseTrackingOptions?: any) => {
-
-        router = _router;
-
-        if (!router) {
-            console.warn('Router is not specified');
-            return;
-        }
 
         const requiredOptions = ['SDK_APP_ID', 'SDK_APP_SECRET', 'SDK_API_URL'];
 
@@ -57,14 +47,13 @@ const _SDK = {
             StopMouseTracker()
             if (_mouseTrackingOptions?.pages) {
                 if (_mouseTrackingOptions.pages.includes(_router.currentRoute.value.path))
-                    MouseTracker()
+                    MouseTracker(_router)
             }
             if (to.fullPath !== from.fullPath)
                 debouncedRoute({ to, from, tag: 'change' });
         })
 
         checkIdle();
-
 
         Vue.directive('tracker', {
             mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
@@ -154,4 +143,4 @@ const _SDK = {
     },
 };
 
-export { _SDK, options, router };
+export { _SDK, options };
