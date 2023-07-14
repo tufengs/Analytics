@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-10">
-    <div class="tw-text-2xl tw-font-bold">
+  <div class="h-full w-full flex flex-col items-center justify-center gap-10">
+    <div class="text-2xl font-bold">
       Bienvenue sur le back-office de SDK
     </div>
-    <div class="tw-border-2 tw-rounded-lg tw-w-96 tw-p-4 tw-shadow-lg tw-flex tw-flex-col  ">
-      <div class="tw-text-xl tw-text-center tw-mb-4">
+    <div class="border-2 rounded-lg w-96 p-4 shadow-lg flex flex-col  ">
+      <div class="text-xl text-center mb-4">
         S'enregistrer
       </div>
       <div>
@@ -15,19 +15,19 @@
         <v-text-field variant="outlined" label="Numéro de téléphone"/>
         <v-text-field variant="outlined" label="Url de votre site"/>
       </div>
-      <div class="tw-flex tw-flex-col tw-gap-4">
+      <div class="flex flex-col gap-4">
         <v-btn
           color="teal"
           block
         >
           Confirmer
         </v-btn>
-        <div class="tw-flex">
-          <router-link :to="{name: 'session-login'}" class="hover:tw-underline hover:text-teal-700">
+        <div class="flex">
+          <router-link :to="{name: 'session-login'}" class="hover:underline hover:text-teal-700">
             Se connecter
           </router-link>
           <v-spacer />
-          <router-link :to="{name: 'session-password-forgot'}" class="hover:tw-underline hover:text-teal-700">
+          <router-link :to="{name: 'session-password-forgot'}" class="hover:underline hover:text-teal-700">
             Mot de passe oublié
           </router-link>
         </div>

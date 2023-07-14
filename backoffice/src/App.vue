@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import HeaderC from './components/Header.vue';
 </script>
 
 <template>
-  <div class="tw-h-screen tw-w-screen">
+  <div class="h-screen">
+    <HeaderC></HeaderC>
     <RouterView />
   </div>
 </template>

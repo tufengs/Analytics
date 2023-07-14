@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-pl-64">
+  <div class="flex pl-64">
     <sidebar />
     <router-view />
   </div>

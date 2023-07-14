@@ -1,9 +1,9 @@
 <template>
-  <div class="tw-w-full">
-    <div class="tw-text-2xl tw-p-4 tw-font-bold">
+  <div class="w-full">
+    <div class="text-2xl p-4 font-bold">
       Tunnels de conversion
     </div>
-    <div class="tw-p-8 tw-w-full">
+    <div class="p-8 w-full">
       <heatmap></heatmap>
     </div>
   </div>

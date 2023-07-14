@@ -1,9 +1,9 @@
 <template>
-  <div class="tw-w-full">
-    <div class="tw-text-2xl tw-p-4 tw-font-bold">
+  <div class="w-full">
+    <div class="text-2xl p-4 font-bold">
       Tunnels de conversion
     </div>
-    <div class="tw-p-8 tw-w-full">
+    <div class="p-8 w-full">
       <v-table>
         <thead>
         <tr>
@@ -37,7 +37,7 @@
           <td>{{ item.company }}</td>
           <td>{{ item.url }}</td>
           <td>
-            <div class="tw-flex tw-items-center tw-justify-center">
+            <div class="flex items-center justify-center">
               <v-btn
                 icon="mdi-download-box"
                 class="rounded"
@@ -47,7 +47,7 @@
             </div>
           </td>
           <td>
-            <div class="tw-flex tw-items-center tw-justify-center">
+            <div class="flex items-center justify-center">
               <v-btn
                 icon="mdi-account-box"
                 class="rounded"
