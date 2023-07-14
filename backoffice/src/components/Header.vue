@@ -1,6 +1,6 @@
 <template>
   <div class="px-5 h-14 bg-white border-b flex items-center">
-    <div @click="router.push({ name: "home" })" class="flex items-center gap-x-3 cursor-pointer">
+    <div @click="router.push({ name: 'home' })" class="flex items-center gap-x-3 cursor-pointer">
       <font-awesome-icon :icon="['fas', 'chart-pie']" />
       <p class="italic text-slate-800 text-xl">Analytics</p>
     </div>

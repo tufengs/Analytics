@@ -1,18 +1,18 @@
 <template>
   <div class="h-full w-full flex flex-col items-center justify-center gap-10">
     <div class="text-2xl font-bold">
-      Bienvenue sur le back-office de SDK
+      Welcome back
     </div>
-    <div class="border-2 rounded-lg w-96 p-4 shadow-lg flex flex-col  ">
+    <div class="rounded-lg w-96 p-8 shadow-lg flex flex-col  ">
       <div class="text-xl text-center mb-4">
-        S'enregistrer
+        Register
       </div>
       <div>
-        <v-text-field v-model="email" variant="outlined" label="Email" type="email" />
-        <v-text-field v-model="password" variant="outlined" label="Mot de passe" type="password" />
-        <v-text-field v-model="company" variant="outlined" label="Company name"/>
-        <v-text-field variant="outlined" label="KBIS"/>
-        <v-text-field v-model="baseUrl" variant="outlined" label="Base url of yout website" />
+        <v-text-field v-model="email" density="compact" variant="outlined" label="Email" type="email" />
+        <v-text-field v-model="password" density="compact" variant="outlined" label="Password" type="password" />
+        <v-text-field v-model="company" density="compact" variant="outlined" label="Company name"/>
+        <v-text-field variant="outlined" density="compact" label="KBIS"/>
+        <v-text-field v-model="baseUrl" density="compact" variant="outlined" label="Base url of yout website" />
       </div>
       <div class="flex flex-col gap-4">
         <v-btn
@@ -20,15 +20,15 @@
           color="teal"
           block
         >
-          Confirmer
+          Confirm
         </v-btn>
         <div class="flex">
           <router-link :to="{name: 'session-login'}" class="hover:underline hover:text-teal-700">
-            Se connecter
+            Login
           </router-link>
           <v-spacer />
           <router-link :to="{name: 'session-password-forgot'}" class="hover:underline hover:text-teal-700">
-            Mot de passe oublié
+            Password forgotten ?
           </router-link>
         </div>
       </div>

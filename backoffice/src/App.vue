@@ -6,6 +6,6 @@ import HeaderC from './components/Header.vue';
 <template>
   <div class="h-screen">
     <HeaderC></HeaderC>
-    <RouterView />
+    <RouterView class="pt-5" />
   </div>
 </template>
