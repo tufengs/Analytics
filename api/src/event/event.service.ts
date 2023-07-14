@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDatumDto } from './dto/create-datum.dto';
 import { UpdateDatumDto } from './dto/update-datum.dto';
-import { InjectModel, InjectConnection } from '@nestjs/mongoose';
-import { Model, Connection } from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import { Event } from './schemas/event.schema';
 
 @Injectable()
@@ -24,11 +24,13 @@ export class DataService {
     return this.connection.model(Event.name).find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} datum`;
+  findOne(app_id: string, app_secret: string, id: number) {
+    return this.connection
+      .model(Event.name)
+      .find({ app_id, app_secret, _id: id });
   }
 
-  update(id: number, updateDatumDto: UpdateDatumDto) {
+  update(id: string, updateDatumDto: UpdateDatumDto) {
     return `This action updates a #${id} datum`;
   }
 

@@ -9,19 +9,21 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from '../auth.guard';
+import { Roles } from 'src/roles.decorator';
+import { RolesGuard } from 'src/roles.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
+  signIn(@Body() signInDto: any) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @Post('signup')
-  signUp(@Body() signUpDto: Record<string, any>) {
+  signUp(@Body() signUpDto: any) {
     return this.authService.signUp({
       email: signUpDto.email,
       password: signUpDto.password,
@@ -30,7 +32,8 @@ export class AuthController {
     });
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('WEBMASTER')
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;

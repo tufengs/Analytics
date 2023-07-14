@@ -7,10 +7,14 @@ import {
   Param,
   Delete,
   Headers,
+  UseGuards
 } from '@nestjs/common';
-import { DataService } from './data.service';
+import { DataService } from './event.service';
 import { CreateDatumDto } from './dto/create-datum.dto';
 import { UpdateDatumDto } from './dto/update-datum.dto';
+import { AuthGuard } from 'src/auth.guard';
+import { Roles } from 'src/roles.decorator';
+import { RolesGuard } from 'src/roles.guard';
 
 @Controller('api/events')
 export class DataController {
@@ -25,6 +29,8 @@ export class DataController {
   }
 
   @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('WEBMASTER')
   findAll(@Headers() headers) {
     const app_id = headers['app-id'];
     const app_secret = headers['app-secret'];
@@ -33,13 +39,17 @@ export class DataController {
 
   // TODO: Rajouter RoleGuard ADMIN
   @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN')
   findAllAdmin() {
     return this.dataService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dataService.findOne(+id);
+  findOne(@Headers() headers, @Param('id') id: string) {
+    const app_id = headers['app-id'];
+    const app_secret = headers['app-secret'];
+    return this.dataService.findOne(id, app_id, app_secret);
   }
 
   @Patch(':id')
@@ -50,7 +60,7 @@ export class DataController {
   ) {
     const app_id = headers['app-id'];
     const app_secret = headers['app-secret'];
-    return this.dataService.update(+id, updateDatumDto);
+    return this.dataService.update(id, updateDatumDto);
   }
 
   @Delete(':id')

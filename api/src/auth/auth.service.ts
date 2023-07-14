@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
+
 interface IJwtPayload {
   email: string;
   company: string;
@@ -26,7 +27,7 @@ export class AuthService {
     if (!areEqual) {
       throw new UnauthorizedException();
     }
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email, role: user.role };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
@@ -37,16 +38,8 @@ export class AuthService {
       email,
       password,
       company,
-      baseUrl,
+      baseUrl
     });
-
-    const payload: IJwtPayload = {
-      email: userCreated.email,
-      company: userCreated.company,
-      baseUrl: userCreated.baseUrl,
-      role: userCreated.role,
-      sub: userCreated.id,
-    };
 
     return userCreated;
   }

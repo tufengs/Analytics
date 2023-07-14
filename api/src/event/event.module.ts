@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DataService } from './data.service';
-import { DataController } from './data.controller';
+import { DataService } from './event.service';
+import { DataController } from './event.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { EventSchema, Event } from './schemas/event.schema';
+import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
@@ -21,6 +22,6 @@ import { EventSchema, Event } from './schemas/event.schema';
     ]),
   ],
   controllers: [DataController],
-  providers: [DataService],
+  providers: [JwtService, DataService],
 })
 export class DataModule {}

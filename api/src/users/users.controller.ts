@@ -6,10 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthGuard } from 'src/auth.guard';
+import { RolesGuard } from 'src/roles.guard';
+import { Role } from '@prisma/client';
+import { Roles } from 'src/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -21,6 +26,8 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN')
   findAll() {
     return this.usersService.findAll();
   }
@@ -31,8 +38,10 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN', 'WEBMASTER')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
