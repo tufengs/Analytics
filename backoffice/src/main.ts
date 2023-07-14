@@ -8,7 +8,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
-
+import 'mosha-vue-toastify/dist/style.css'
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 

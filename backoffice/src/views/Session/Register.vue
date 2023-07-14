@@ -8,15 +8,15 @@
         S'enregistrer
       </div>
       <div>
-        <v-text-field variant="outlined" label="Email"/>
-        <v-text-field variant="outlined" label="Mot de passe" type="password"/>
-        <v-text-field variant="outlined" label="Nom de la société"/>
+        <v-text-field v-model="email" variant="outlined" label="Email" type="email" />
+        <v-text-field v-model="password" variant="outlined" label="Mot de passe" type="password" />
+        <v-text-field v-model="company" variant="outlined" label="Company name"/>
         <v-text-field variant="outlined" label="KBIS"/>
-        <v-text-field variant="outlined" label="Numéro de téléphone"/>
-        <v-text-field variant="outlined" label="Url de votre site"/>
+        <v-text-field v-model="baseUrl" variant="outlined" label="Base url of yout website" />
       </div>
       <div class="flex flex-col gap-4">
         <v-btn
+          @click="submitRegister"
           color="teal"
           block
         >
@@ -37,4 +37,26 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { useUserStore } from '@/stores/user';
+import { useRouter } from "vue-router";
+import { createToast } from 'mosha-vue-toastify';
+const router = useRouter();
+const userStore = useUserStore();
+const { register } = userStore;
+
+const email = ref('')
+const password = ref('')
+const company = ref('')
+const baseUrl = ref('')
+
+const submitRegister = async () => {
+  try {
+    await register({ email: email.value, password: password.value, company: company.value, baseUrl: baseUrl.value })
+    createToast('Account created', { position: "bottom-right", type: "success" })
+  } catch (error) {
+    createToast('Error while trying to sign up', { position: "bottom-right", type: "danger" })
+  }
+}
+
 </script>

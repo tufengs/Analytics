@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 import { useStorage } from "@vueuse/core";
 import { computed } from "vue";
 import router from "@/router";

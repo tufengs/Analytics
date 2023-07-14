@@ -11,9 +11,7 @@ export interface CreateUserI {
     email: string
     password: string
     company: string
-    kbis: string
-    phoneNumber: string
-    websiteUrl: string
+    baseUrl: string
 }
 
 export interface UpdateUserI {

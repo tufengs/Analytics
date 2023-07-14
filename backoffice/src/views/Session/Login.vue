@@ -8,11 +8,12 @@
         Login
       </div>
       <div>
-        <v-text-field variant="outlined" label="email"/>
-        <v-text-field variant="outlined" label="mot de passe" type="password"/>
+        <v-text-field v-model="email" variant="outlined" label="email"/>
+        <v-text-field v-model="password" variant="outlined" label="mot de passe" type="password"/>
       </div>
       <div class="flex flex-col gap-4">
         <v-btn
+          @click="submitLogin"
           color="teal"
           block
         >
@@ -33,4 +34,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue"
+import { useUserStore } from '@/stores/user';
+import { useRouter } from "vue-router";
+import { createToast } from 'mosha-vue-toastify';
+const router = useRouter();
+const userStore = useUserStore();
+const { login, profile } = userStore;
+
+const email = ref('');
+const password = ref('');
+
+const submitLogin = async () => {
+  try {
+    await login({ email: email.value, password: password.value });
+    await router.push({ name: 'home'});
+  } catch (error) {
+    createToast('Invalid credentials', { position: "bottom-right", type: "danger" })
+  }
+}
 </script>
