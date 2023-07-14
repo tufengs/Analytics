@@ -1,15 +1,15 @@
 <template>
   <div class="h-full w-full flex flex-col items-center justify-center gap-10">
     <div class="text-2xl font-bold">
-      Bienvenue sur le back-office de SDK
+      Welcome back
     </div>
-    <div class="border-2 rounded-lg w-96 p-4 shadow-lg flex flex-col  ">
+    <div class="rounded-lg w-96 p-8 shadow-lg flex flex-col  ">
       <div class="text-xl text-center mb-4">
         Login
       </div>
       <div>
-        <v-text-field v-model="email" variant="outlined" label="email"/>
-        <v-text-field v-model="password" variant="outlined" label="mot de passe" type="password"/>
+        <v-text-field v-model="email" density="compact" variant="outlined" label="Email" />
+        <v-text-field v-model="password" density="compact" variant="outlined" label="password" type="password" />
       </div>
       <div class="flex flex-col gap-4">
         <v-btn
@@ -17,15 +17,15 @@
           color="teal"
           block
         >
-          Se connecter
+          Login
         </v-btn>
         <div class="flex">
           <router-link :to="{name: 'session-register'}" class="hover:underline hover:text-teal-700">
-            S'enregistrer
+            Register
           </router-link>
           <v-spacer />
           <router-link :to="{name: 'session-password-forgot'}" class="hover:underline hover:text-teal-700">
-            Mot de passe oublié ?
+            Password forgotten ?
           </router-link>
         </div>
       </div>
