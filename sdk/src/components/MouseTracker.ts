@@ -1,10 +1,12 @@
 import { debounce, size } from 'lodash';
 import { reactive } from '@vue/reactivity';
 import { sendEvent } from '../functions/SendEvent';
+import { compressPoints } from '../functions/CompressPoints';
 import { EventEnum } from '../enums/EventEnum';
 
 const eventPositions: { [tag: string]: { x: number, y: number }[] } = reactive({})
-const events = ['mousemove', 'click', 'touchstart']
+const events: { [key: string]: string } = { mousemove: "MOUSE-TRACKER", click: "CLICK-TRACKER", touchstart: "TOUCH-TRACKER", scroll: "SCROLL-TRACKER" }
+
 
 const debounceMouse = debounce((event) => {
   if (!eventPositions[event.type])
@@ -16,16 +18,16 @@ const debounceMouse = debounce((event) => {
       y: +event.offsetY ?? 0,
     }
   )
-}, 3)
+}, 1)
 
-const debouncePosition = debounce(() => {
+const debouncePosition = () => {
   if (Object.keys(eventPositions).length) {
     for (const [key, value] of Object.entries(eventPositions)) {
       if (!value.length) continue;
 
       sendEvent({
-        event: EventEnum.mouse,
-        tag: key,
+        event: key,
+        tag: events[key],
         data: compressPoints(value),
       }).then(() => {
         delete eventPositions[key];
@@ -33,21 +35,11 @@ const debouncePosition = debounce(() => {
 
     }
   }
-}, 2000)
-
-const getZoomRatio = () => {
-  let zoom: number = 1;
-
-  if (window.devicePixelRatio !== undefined) {
-    zoom = +window.devicePixelRatio.toFixed(2);
-  }
-
-  return zoom;
 }
 
 const MouseTracker = () => {
 
-  events.map((event) => {
+  Object.keys(events).map((event) => {
     window.addEventListener(event, debounceMouse);
   })
 
@@ -57,48 +49,9 @@ const MouseTracker = () => {
 }
 
 const StopMouseTracker = () => {
-  events.map((event) => {
+  Object.keys(events).map((event) => {
     window.removeEventListener(event, debounceMouse);
   })
-}
-
-function compressPoints(points: { x: number, y: number }[]) {
-  const compressed: { x: number, y: number, value: number }[] = [];
-
-  const grid: number = 5;
-
-  for (let i = 0; i < points.length; i++) {
-    const zoom = getZoomRatio();
-    let { x, y } = points[i];
-
-    x *= zoom;
-    y *= zoom;
-
-    const adjustedPoint = {
-      x: Math.round(x / grid) * grid,
-      y: Math.round(y / grid) * grid,
-    };
-
-    const existingPoint = compressed.find(p =>
-      p.x === adjustedPoint.x &&
-      p.y === adjustedPoint.y
-    );
-
-    if (existingPoint) {
-      existingPoint.value++;
-    } else {
-      compressed.push({ ...adjustedPoint, value: 1 });
-    }
-  }
-
-  return compressed;
-}
-
-function sizeof(object: any) {
-  const stringifiedObject = JSON.stringify(object);
-  const sizeInBytes = size(stringifiedObject);
-
-  return sizeInBytes
 }
 
 export { MouseTracker, StopMouseTracker };

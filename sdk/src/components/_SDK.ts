@@ -44,11 +44,10 @@ const _SDK = {
             }, 2000);
 
         router.afterEach((to, from) => {
+            StopMouseTracker()
             if (_mouseTrackingOptions?.pages) {
                 if (_mouseTrackingOptions.pages.includes(router.currentRoute.value.path))
-                    MouseTracker();
-                else
-                    StopMouseTracker();
+                    MouseTracker()
             }
             if (to.fullPath !== from.fullPath)
                 debouncedRoute({ to, from, tag: 'change' });
@@ -59,71 +58,86 @@ const _SDK = {
 
         Vue.directive('tracker', {
             mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
-                const [event, tag] = binding.value.split('.');
+                const event = binding.arg;
 
-                const debouncedEvent = debounce(() => {
-                    sendEvent({ event, tag });
-                }, 2000);
+                if (!event) {
+                    console.warn('Event type is not specified');
+                    return;
+                }
 
-                eventListeners[binding.value] = () => {
-                    debouncedEvent();
-                };
+                for (const tag in binding.modifiers) {
+                    const debouncedEvent = debounce(() => {
+                        sendEvent({ event, tag });
+                    }, 2000);
 
-                switch (event) {
-                    case EventEnum.click:
-                        el.addEventListener('click', eventListeners[binding.value]);
-                        break;
+                    eventListeners[tag] = () => {
+                        debouncedEvent();
+                    };
 
-                    case EventEnum.hover:
-                        el.addEventListener('mouseenter', eventListeners[binding.value]);
-                        break;
+                    switch (event) {
+                        case EventEnum.click:
+                            el.addEventListener('click', eventListeners[tag]);
+                            break;
 
-                    case EventEnum.mouse:
-                        el.addEventListener('mousemove', eventListeners[binding.value]);
-                        break;
+                        case EventEnum.hover:
+                            el.addEventListener('mouseenter', eventListeners[tag]);
+                            break;
 
-                    case EventEnum.drag:
-                        el.addEventListener('dragstart', eventListeners[binding.value]);
-                        el.addEventListener('dragend', eventListeners[binding.value]);
-                        break;
+                        case EventEnum.mouse:
+                            el.addEventListener('mousemove', eventListeners[tag]);
+                            break;
 
-                    case EventEnum.keyboard:
-                        el.addEventListener('keyup', eventListeners[binding.value]);
-                        break;
+                        case EventEnum.drag:
+                            el.addEventListener('dragstart', eventListeners[tag]);
+                            el.addEventListener('dragend', eventListeners[tag]);
+                            break;
 
-                    default:
-                        console.warn(`Event type "${event}" is not supported`);
+                        case EventEnum.keyboard:
+                            el.addEventListener('keyup', eventListeners[tag]);
+                            break;
+
+                        default:
+                            console.warn(`Event type "${event}" is not supported`);
+                    }
                 }
             },
             beforeUnmount(el: HTMLElement, binding: DirectiveBinding<string>) {
                 clearIdleTimeout();
 
-                const [event] = binding.value.split('.');
-                switch (event) {
-                    case EventEnum.click:
-                        el.removeEventListener('click', eventListeners[binding.value]);
-                        delete eventListeners[binding.value];
-                        break;
+                const event = binding.arg;
 
-                    case EventEnum.mouse:
-                        el.removeEventListener('mousemove', eventListeners[binding.value]);
-                        delete eventListeners[binding.value];
-                        break;
+                if (!event) {
+                    console.warn('Event type is not specified');
+                    return;
+                }
 
-                    case EventEnum.drag:
-                        el.removeEventListener('dragstart', eventListeners[binding.value]);
-                        delete eventListeners[binding.value];
-                        el.removeEventListener('dragend', eventListeners[binding.value]);
-                        delete eventListeners[binding.value];
-                        break;
+                for (const tag in binding.modifiers) {
+                    switch (event) {
+                        case EventEnum.click:
+                            el.removeEventListener('click', eventListeners[tag]);
+                            delete eventListeners[tag];
+                            break;
 
-                    case EventEnum.keyboard:
-                        el.removeEventListener('keydown', eventListeners[binding.value]);
-                        delete eventListeners[binding.value];
-                        break;
+                        case EventEnum.mouse:
+                            el.removeEventListener('mousemove', eventListeners[tag]);
+                            delete eventListeners[tag];
+                            break;
 
-                    default:
-                        console.warn(`Event type "${event}" is not supported`);
+                        case EventEnum.drag:
+                            el.removeEventListener('dragstart', eventListeners[tag]);
+                            delete eventListeners[tag];
+                            el.removeEventListener('dragend', eventListeners[tag]);
+                            delete eventListeners[tag];
+                            break;
+
+                        case EventEnum.keyboard:
+                            el.removeEventListener('keydown', eventListeners[tag]);
+                            delete eventListeners[tag];
+                            break;
+
+                        default:
+                            console.warn(`Event type "${event}" is not supported`);
+                    }
                 }
             },
         });
