@@ -3,6 +3,7 @@ export interface UserI {
     email: string
     company: string
     kbis: string
+    role: string
     phoneNumber: string
     websiteUrl: string
 }

@@ -5,8 +5,13 @@
       <p class="italic text-slate-800 text-xl">Analytics</p>
     </div>
     <v-spacer></v-spacer>
-    <div v-if="currentUser">
+    <div v-if="currentUser" class="flex gap-2">
       <div class="border rounded-xl px-3 py-2 cursor-pointer text-slate-800 hover:bg-slate-50">{{ currentUser.email }}</div>
+      <div class="border rounded-xl px-3 py-2 cursor-pointer text-slate-800 hover:bg-slate-50"
+        @click="handleLogout()"
+      >
+        <font-awesome-icon :icon="['fas', 'arrow-right']" />
+      </div>
     </div>
     <div v-else class="flex gap-x-3">
       <button @click.stop="router.push({ name: 'session-register' })" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
@@ -24,7 +29,14 @@
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
+
 const userStore = useUserStore();
+const {logout} = userStore
 const { currentUser } = storeToRefs(userStore);
 const router = useRouter();
+
+const handleLogout = () => {
+  logout();
+  router.push({name: 'session-login'})
+}
 </script>

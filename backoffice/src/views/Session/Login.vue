@@ -48,7 +48,7 @@ const password = ref('');
 const submitLogin = async () => {
   try {
     await login({ email: email.value, password: password.value });
-    await router.push({ name: 'home'});
+    await router.push({ name: 'webmaster'});
   } catch (error) {
     createToast('Invalid credentials', { position: "bottom-right", type: "danger" })
   }
