@@ -8,6 +8,7 @@ import { ConfigService, ConfigModule } from '@nestjs/config/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataModule } from './event/event.module';
+import { TagModule } from './tag/tag.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DataModule } from './event/event.module';
       }),
       inject: [ConfigService],
     }),
+    TagModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, ConfigService],
