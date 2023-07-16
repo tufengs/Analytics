@@ -11,7 +11,7 @@
         Pour réinitialiser votre mot de passe, veuillez entrez un email, si un celui existe un mail vous sera envoyé.
       </div>
       <div>
-        <v-text-field variant="outlined" label="email"/>
+        <v-text-field density="compact" variant="outlined" label="email"/>
       </div>
       <div class="flex flex-col gap-4">
         <v-btn

@@ -11,6 +11,7 @@
       <v-text-field
         v-model="title"
         variant="outlined"
+        density="compact"
         hide-details
       />
       <v-btn variant="outlined" hide-details @click="handleCreateCredential()">
