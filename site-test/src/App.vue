@@ -11,7 +11,7 @@ import HelloWorld from './components/HelloWorld.vue';
       <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink v-tracker="'click.HOME'" to="/">Home</RouterLink>
+        <RouterLink v-tracker:click.HOME to="/">Home</RouterLink>
         <RouterLink v-tracker="'mouse.HERE'" to="/about">About</RouterLink>
       </nav>
 

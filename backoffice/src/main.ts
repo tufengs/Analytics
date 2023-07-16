@@ -16,10 +16,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faChartPie, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faChartPie, faArrowRight, faUser, faChartArea, faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faChartPie, faArrowRight)
+library.add(faChartPie, faArrowRight, faUser, faChartArea, faChartBar, faChartLine)
 
 const vuetify = createVuetify({
     components,
