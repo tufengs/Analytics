@@ -1,4 +1,4 @@
-import { options } from "../components/_SDK";
+import { config } from "../components/_SDK";
 import { sendEvent } from "./SendEvent";
 import { EventEnum } from "../enums/EventEnum";
 
@@ -24,7 +24,7 @@ const checkIdle = () => {
 
     idleTimeout = setTimeout(() => {
         sendEvent({ event: EventEnum.idle, tag: 'AFK' });
-    }, options.IDLE_TIMEOUT);
+    }, config.IDLE_TIMEOUT);
 
     setIdleTimeout(idleTimeout);
 };

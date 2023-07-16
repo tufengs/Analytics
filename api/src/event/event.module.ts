@@ -14,9 +14,6 @@ import { PrismaService } from 'src/prisma.service';
         name: Event.name,
         useFactory: () => {
           const schema = EventSchema;
-          schema.pre('save', function () {
-            console.log('Hello from pre save');
-          });
           return schema;
         },
         inject: [ConfigService],

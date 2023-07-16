@@ -38,12 +38,12 @@ export class DataController {
     return this.dataService.findAllByApp(app_id);
   }
 
-  @Get()
+  @Get('/tag/:tag')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('WEBMASTER')
-  @UseGuards(SecretGuard)
-  getAppStats() {
-
+  findEventsByTag(@Headers() headers, @Param('tag') tag: string) {
+    const app_id = headers['app-id'];
+    return this.dataService.findEventsByTag(app_id, tag);
   }
 
   // TODO: Rajouter RoleGuard ADMIN

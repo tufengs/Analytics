@@ -6,10 +6,10 @@ import { checkIdle, clearIdleTimeout } from '../functions/Idle';
 import { MouseTracker, StopMouseTracker } from './MouseTracker';
 
 import type { App, DirectiveBinding } from 'vue';
-import type { Router, RouteLocationNormalized } from 'vue-router';
+import type { Router } from 'vue-router';
 import type { Options } from '../interfaces/Options';
 
-const options: Options = reactive({
+const config: Options = reactive({
     SDK_APP_ID: '',
     SDK_APP_SECRET: '',
     SDK_API_URL: '',
@@ -19,38 +19,35 @@ const options: Options = reactive({
 const eventListeners: { [key: string]: (event: Event) => void } = {};
 
 const _SDK = {
-    install: (Vue: App, _router: Router, _options: Options, _mouseTrackingOptions?: any) => {
+    install: (Vue: App, _router: Router, _config: Options, _options?: any) => {
 
         const requiredOptions = ['SDK_APP_ID', 'SDK_APP_SECRET', 'SDK_API_URL'];
-
-        const missingOptions = requiredOptions.filter((option) => !_options[option]);
+        const missingOptions = requiredOptions.filter((option) => !_config[option]);
 
         if (missingOptions.length > 0) {
             throw new Error(`Missing required options: ${missingOptions.join(', ')}`);
         }
 
-        Object.assign(options, _options);
+        Object.assign(config, _config);
 
-        const debouncedRoute = debounce(
-            ({ to, from, tag }: { to: RouteLocationNormalized, from: RouteLocationNormalized, tag: string }) => {
-                sendEvent({
-                    event: EventEnum.navigation,
-                    tag: tag,
-                    data: {
-                        to: to.fullPath,
-                        from: from.fullPath,
-                    },
-                });
-            }, 2000);
-
-        _router.afterEach((to, from) => {
+        _router.afterEach((to) => {
             StopMouseTracker()
-            if (_mouseTrackingOptions?.pages) {
-                if (_mouseTrackingOptions.pages.includes(_router.currentRoute.value.path))
+
+            if (_options?.trackMouse) {
+                if (_options.trackMouse.includes(to.path))
                     MouseTracker(_router)
             }
-            if (to.fullPath !== from.fullPath)
-                debouncedRoute({ to, from, tag: 'change' });
+
+            if (_options?.trackChange) {
+                for (const route of _options.trackChange) {
+                    if (route.to === to.path) {
+                        sendEvent({
+                            event: EventEnum.navigation,
+                            tag: route.tag,
+                        });
+                    }
+                }
+            }
         })
 
         checkIdle();
@@ -143,4 +140,4 @@ const _SDK = {
     },
 };
 
-export { _SDK, options };
+export { _SDK, config };

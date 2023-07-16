@@ -12,9 +12,6 @@ import { ConfigService } from '@nestjs/config';
         name: Funnel.name,
         useFactory: () => {
           const schema = FunnelSchema;
-          schema.pre('save', function () {
-            console.log('Hello from pre save');
-          });
           return schema;
         },
         inject: [ConfigService],
@@ -24,4 +21,4 @@ import { ConfigService } from '@nestjs/config';
   controllers: [FunnelController],
   providers: [FunnelService, JwtService]
 })
-export class FunnelModule {}
+export class FunnelModule { }
