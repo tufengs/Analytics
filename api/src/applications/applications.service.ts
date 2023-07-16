@@ -9,15 +9,16 @@ export class ApplicationsService {
         return this.prismaService.application.findMany()
     }
 
-    // async findOneWithSecret(id: string, secret_id: string) {
-    //     return this.prismaService.application.findFirst({
-    //         where: {
-    //             id: id,
-    //             credentials:
-    //             {
-    //                 id: secret_id
-    //             }
-    //         }
-    //     })
-    // }
+    async findOneWithSecret(id: string, secret_id: string) {
+        return this.prismaService.application.findFirstOrThrow({
+            where: {
+                id,
+                credentials: {
+                    some: {
+                        secret: secret_id
+                    }
+                }
+            }
+        })
+    }
 }
