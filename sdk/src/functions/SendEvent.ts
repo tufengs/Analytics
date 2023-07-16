@@ -7,17 +7,17 @@ const sendEvent = async (data: { event: string, tag: string, data?: object | str
     try {
         const fp = await fpLoad();
         const result = await fp.get();
-        const visitorId = result.visitorId;
+        const visitor_id = result.visitorId;
 
-        const sessionId = sessionStorage.getItem('sessionId') || generateSessionId();
-        sessionStorage.setItem('sessionId', sessionId);
+        const session_id = sessionStorage.getItem('session_id') || generateSessionId();
+        sessionStorage.setItem('session_id', session_id);
 
         const obj = {
             ...data,
 
-            visitorId,
+            visitor_id,
 
-            sessionId,
+            session_id,
 
             host: window.location.host,
             path: window.location.pathname,

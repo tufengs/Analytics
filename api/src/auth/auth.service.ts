@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
@@ -36,13 +36,19 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    console.log(user)
+
+    // @ts-ignore
+    if (!user.validated) {
+      throw new BadRequestException("Waiting for admin validation")
+    }
+
     const payload = {
       sub: user.id,
       email: user.email,
       role: user.role,
       app_id: user.application?.id
     };
-
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

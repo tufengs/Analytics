@@ -1,20 +1,17 @@
 import { Module } from '@nestjs/common';
-import { TagService } from './tag.service';
-import { TagController } from './tag.controller';
-import { PrismaService } from 'src/prisma.service';
+import { FunnelService } from './funnel.service';
+import { FunnelController } from './funnel.controller';
 import { JwtService } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TagSchema } from './schemas/tag.schema';
+import { FunnelSchema, Funnel } from './schemas/funnel.schema';
 import { ConfigService } from '@nestjs/config';
-import { Tag } from './schemas/tag.schema';
-
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
       {
-        name: Tag.name,
+        name: Funnel.name,
         useFactory: () => {
-          const schema = TagSchema;
+          const schema = FunnelSchema;
           schema.pre('save', function () {
             console.log('Hello from pre save');
           });
@@ -24,7 +21,7 @@ import { Tag } from './schemas/tag.schema';
       },
     ]),
   ],
-  controllers: [TagController],
-  providers: [TagService, JwtService]
+  controllers: [FunnelController],
+  providers: [FunnelService, JwtService]
 })
-export class TagModule {}
+export class FunnelModule {}

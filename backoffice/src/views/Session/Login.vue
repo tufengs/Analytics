@@ -49,8 +49,9 @@ const submitLogin = async () => {
   try {
     await login({ email: email.value, password: password.value });
     await router.push({ name: 'webmaster'});
-  } catch (error) {
-    createToast('Invalid credentials', { position: "bottom-right", type: "danger" })
+  } catch (error: any) {
+    const { message } = error.response.data;
+    createToast(message, { position: "bottom-right", type: "danger" })
   }
 }
 </script>

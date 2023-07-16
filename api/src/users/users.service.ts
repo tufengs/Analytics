@@ -11,6 +11,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     return this.prismaService.user.create({
+      // @ts-ignore
       data: {
         email: createUserDto.email,
         company: createUserDto.company,
@@ -110,6 +111,7 @@ export class UsersService {
     });
 
     const application = await this.prismaService.application.create({
+      // @ts-ignore
       data: {
         userId: id
       }

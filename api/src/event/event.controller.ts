@@ -15,12 +15,14 @@ import { UpdateDatumDto } from './dto/update-datum.dto';
 import { AuthGuard } from 'src/auth.guard';
 import { Roles } from 'src/roles.decorator';
 import { RolesGuard } from 'src/roles.guard';
+import { SecretGuard } from 'src/secret.guard';
 
 @Controller('api/events')
 export class DataController {
-  constructor(private readonly dataService: DataService) {}
+  constructor(private readonly dataService: DataService) { }
 
   @Post()
+  @UseGuards(SecretGuard)
   create(@Headers() headers, @Body() createDatumDto: CreateDatumDto) {
     const app_id = headers['app-id'];
     const app_secret = headers['app-secret'];

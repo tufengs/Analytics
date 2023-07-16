@@ -1,4 +1,4 @@
-import {Application} from "@prisma/client";
+import { Application } from "@prisma/client";
 
 export class User {
   id: string;
