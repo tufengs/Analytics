@@ -3,11 +3,10 @@ import { reactive } from '@vue/reactivity';
 import { sendEvent } from '../functions/SendEvent';
 import { compressPoints } from '../functions/CompressPoints';
 import { EventEnum } from '../enums/EventEnum';
-import { router } from './_SDK';
+import type { Router } from 'vue-router';
 
 const eventPositions: { [tag: string]: { x: number, y: number }[] } = reactive({})
 const events: { [key: string]: string } = { mousemove: "MOUSE-TRACKER", click: "CLICK-TRACKER", touchstart: "TOUCH-TRACKER", scroll: "SCROLL-TRACKER" }
-
 
 const debounceMouse = debounce((event) => {
   if (!eventPositions[event.type])
@@ -38,16 +37,15 @@ const debouncePosition = () => {
   }
 }
 
-const MouseTracker = () => {
-  if (router) {
-    router.beforeEach(() => {
-      debouncePosition();
-    });
-  }
+const MouseTracker = (_router: Router) => {
+
+  _router.beforeEach(() => {
+    debouncePosition();
+  });
+
   Object.keys(events).map((event) => {
     window.addEventListener(event, debounceMouse);
   })
-
 
   setInterval(() => {
     debouncePosition();
