@@ -52,7 +52,6 @@ import { useDashboardStore } from "@/stores/dashboard";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import { DashboardType } from "@/interfaces/dashboard";
-import { createToast } from "mosha-vue-toastify";
 
 const dashboardStore = useDashboardStore()
 const { dashboard, dashboards } = storeToRefs(dashboardStore)
@@ -81,20 +80,12 @@ const handleCreateDashboard = async () => {
 }
 
 const handleAddDashboardElement = async () => {
-  if (!title ||
-    !dashboard_type ||
-    !height ||
-    !width ||
-    !dashboard.value?.id ||
-  )
-    return createToast('Please fill all fields', { type: 'danger' })
-
   await addDashboardElement({
     dashboard_id: dashboard.value.id,
     dashboard_type: dashboard_type.value,
     position: dashboard.value?.dashboard_elements?.length ? dashboard.value?.dashboard_elements?.length + 1 : 0,
-    height: +height.value,
-    width: +width.value
+    height: height.value,
+    width: width.value
   })
 
   dashboard_type.value = ''
