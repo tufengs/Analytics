@@ -1,32 +1,45 @@
 <template>
   <div class="w-full">
-    <div class="text-2xl p-4 font-bold">
-      Page des credentials
-    </div>
+    <h2 class="text-slate-800 font-bold text-2xl pb-3">Credentials</h2>
+
     <div
       v-if="!app_secret"
-      class="px-4 flex items-center gap-4"
+      class="flex items-center gap-4"
     >
-      Créer un app secret
       <v-text-field
         v-model="title"
-        variant="outlined"
         density="compact"
         hide-details
+        placeholder="Enter secret name"
       />
-      <v-btn variant="outlined" hide-details @click="handleCreateCredential()">
-        Créer
+      <v-btn hide-details @click="handleCreateCredential()" color="purple-darken-3" variant="tonal">
+        Create
       </v-btn>
     </div>
-    <div v-else class="px-4 flex items-center gap-4">
-      <p>
-        Votre App secret est : {{ app_secret }} (veuillez pensez à l'enregistrer)
-      </p>
+
+    <div v-else class="flex items-center gap-4">
+      <div class="flex gap-x-3 items-center">
+        <p>
+          Your secret app is : {{ app_secret }} (be sure to save it !)
+        </p>
+        <v-btn @click="copyToClipboard(app_secret, true)" variant="tonal" color="purple-darken-3" rounded icon="" height="40" width="40">
+          <font-awesome-icon :icon="['fas', 'clipboard']" />
+        </v-btn>
+      </div>
       <v-btn
         @click="app_secret = null"
-        variant="outlined"
+        variant="tonal"
+        color="purple-darken-3"
       >
-        Compris
+        Gotcha
+      </v-btn>
+    </div>
+    <div class="flex items-center gap-x-3 py-3 italic text-slate-800 font-medium">
+      <p>
+        Your APP_ID : <span class="font-bold">{{ currentUser.app_id }}</span>
+      </p>
+      <v-btn @click="copyToClipboard(currentUser.app_id, false)" variant="tonal" color="purple-darken-3" rounded icon="" height="40" width="40">
+        <font-awesome-icon :icon="['fas', 'clipboard']" />
       </v-btn>
     </div>
     <div class="p-8 w-full">
@@ -34,10 +47,10 @@
         <thead>
         <tr>
           <th class="text-center">
-            Titre
+            Title
           </th>
           <th class="text-center">
-            Supprimer
+            Delete
           </th>
         </tr>
         </thead>
@@ -46,7 +59,7 @@
           v-for="item in credentials"
           :key="item.id"
         >
-          <td>{{ item.title }}</td>
+          <td class="text-center">{{ item.title }}</td>
           <td>
             <div class="flex items-center justify-center">
               <v-btn
@@ -69,11 +82,15 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useCredentialsStore} from "@/stores/credentials";
+import {useUserStore} from "@/stores/user";
 import {storeToRefs} from "pinia";
-
+import { createToast } from "mosha-vue-toastify";
 const credentialsStore = useCredentialsStore()
 const {credentials} = storeToRefs(credentialsStore)
 const {createCredential, findCredentials, removeCredential} = credentialsStore
+const userStore = useUserStore();
+const { currentUser } = storeToRefs(userStore);
+
 
 onMounted(async () => {
   await findCredentials()
@@ -87,10 +104,17 @@ const handleDeleteCredential = async (id: string) => {
   title.value = ''
   await findCredentials();
 }
-
+const copyToClipboard = (id: string, app_secret: boolean) => {
+  try {
+    navigator.clipboard.writeText(id);
+    createToast(`${app_secret ? 'APP_SECRET' : 'APP_ID'} copied to clipboard`, { type: 'success', position: 'bottom-right' })
+  } catch (error) {
+  }
+}
 const handleCreateCredential = async () => {
   const res = await createCredential({title: title.value})
-  app_secret.value = res.secret
+  app_secret.value = res.secret;
+  title.value = '';
 }
 </script>
 

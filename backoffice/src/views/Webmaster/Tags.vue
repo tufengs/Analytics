@@ -5,13 +5,13 @@
       <v-text-field  v-model="comment" density="compact" placeholder="Enter tag name" hide-details @keyup.enter="create" />
       <v-btn @click="create" variant="tonal" color="purple-darken-3">Create</v-btn>
     </div>
-    <v-list class="grid grid-cols-3 gap-3">
+    <v-list class="grid grid-cols-3 gap-3 overflow-visible">
       <v-list-item v-for="tag in tags" class="shadow-lg rounded-lg !p-6">{{ tag.comment }}
         <template #subtitle>
           {{ tag._id }}
         </template>
         <template #append>
-          <v-btn @click="copyToClipboard(tag._id)" variant="tonal" color="purple-darken-3" rounded height="40" width="40" class="!p-0">
+          <v-btn @click="copyToClipboard(tag._id)" variant="tonal" color="purple-darken-3" rounded icon="" height="40" width="40">
             <font-awesome-icon :icon="['fas', 'clipboard']" />
           </v-btn>
         </template>
@@ -45,6 +45,7 @@ const copyToClipboard = (id: string) => {
   } catch (error) {
   }
 }
+
 const create = async () => {
   try {
     await createTag({ comment: comment.value });

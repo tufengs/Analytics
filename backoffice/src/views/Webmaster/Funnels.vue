@@ -15,7 +15,7 @@
       <v-btn @click="create" variant="tonal" color="purple-darken-3">Create</v-btn>
     </div>
 
-    <v-list class="grid grid-cols-3 gap-3">
+    <v-list class="grid grid-cols-3 gap-3 overflow-visible">
       <v-list-item v-for="funnel in funnels" class="shadow-lg rounded-lg !p-6">
         <div v-for="tag in funnel.tags">{{ tag.comment }}</div>
         <template #subtitle>

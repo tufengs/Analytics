@@ -11,13 +11,13 @@
             Email
           </th>
           <th class="text-center">
-            N° de tel
+            Phone
           </th>
           <th class="text-center">
-            Nom de la société
+            Company name
           </th>
           <th class="text-center">
-            Url du site
+            Base url
           </th>
           <th class="text-center">
             KBIS
@@ -32,10 +32,10 @@
           v-for="user in users"
           :key="user.id"
         >
-          <td>{{ user.email }}</td>
-          <td>{{ user.phoneNumber }}</td>
-          <td>{{ user.company }}</td>
-          <td>{{ user.baseUrl }}</td>
+          <td class="text-center">{{ user.email }}</td>
+          <td class="text-center">{{ user.phoneNumber }}</td>
+          <td class="text-center">{{ user.company }}</td>
+          <td class="text-center">{{ user.baseUrl }}</td>
           <td>
             <div class="flex items-center justify-center">
               <v-btn
