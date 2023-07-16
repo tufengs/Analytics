@@ -56,7 +56,6 @@ export class DataController {
     return this.dataService.findEventsByTag(app_id, tag);
   }
 
-  // TODO: Rajouter RoleGuard ADMIN
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('ADMIN')

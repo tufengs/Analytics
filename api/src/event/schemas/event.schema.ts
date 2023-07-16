@@ -12,9 +12,6 @@ export class Event {
   app_id: string;
 
   @Prop()
-  app_secret: string;
-
-  @Prop()
   visitor_id: string;
 
   @Prop()

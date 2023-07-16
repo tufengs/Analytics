@@ -29,11 +29,15 @@ app.use(
         trackChange: [
             {
                 'to': '/404',
-                'tag': 's35df1dg',
+                'tag': '64b440c6d4bee49d38e2aff4',
+            },
+            {
+                'to': '/about',
+                'tag': '64b440c1d4bee49d38e2aff2',
             },
             {
                 'to': '/',
-                'tag': '64b42d9ea762eac125da32af',
+                'tag': '64b440bad4bee49d38e2aff0',
             },
         ]
     }
