@@ -24,7 +24,6 @@ export class CredentialsController {
     @Roles('WEBMASTER')
     findAllApplication(@Request() request) {
         const {user} = request
-        console.log(user)
         return this.credentialService.findAllApplication(user.app_id);
     }
 

@@ -9,6 +9,12 @@ export interface UserI {
     application: ApplicationI
 }
 
+export interface CurrentUserI {
+    email: string
+    role: "WEBMASTER"
+    sub: "2ef722ee-f961-4c87-96a2-f5c0dff30fc2"
+}
+
 export interface ApplicationI {
     id: string
     userId: string

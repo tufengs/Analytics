@@ -16,13 +16,14 @@ app.use(
     SDK,
     router,
     {
-        SDK_APP_ID: '586f7e35-48e9-435f-8249-580660b1800b',
-        SDK_APP_SECRET: '8f1f6f23-e7fa-4a86-9e16-e5d7dbfc9fc8',
+        SDK_APP_ID: '9becfaab-b015-4bfe-957b-b377b540c1ce',
+        SDK_APP_SECRET: 'b76099d9-1b92-4d89-b9ee-479983e96e85',
         SDK_API_URL: 'http://localhost:3000/api/events',
         IDLE_TIMEOUT: 5 * 60 * 1000,
     },
     {
         trackMouse: [
+            '/',
             '/about',
             '/settings',
         ],

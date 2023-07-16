@@ -4,7 +4,7 @@
       Dashboard
     </div>
     <div class="flex flex-col px-4">
-      <v-select :items="items" density="compact" variant="outlined"></v-select>
+      <v-select v-model="selected_dashboard" :items="dashboards" item-title="title" item-value="id" density="compact" variant="outlined" @update:model-value="handleFindDashboard" ></v-select>
       <div class="flex h-full gap-4 items-center">
         <v-text-field v-model="title" density="compact" variant="outlined" hide-details></v-text-field>
         <v-btn variant="outlined" class="h-full" @click="handleCreateDashboard">
@@ -25,7 +25,7 @@
           <div
             class="w-1/2 h-96 border-2 rounded border-black flex items-center justify-center hover:bg-neutral-200 cursor-pointer"
             v-bind="props">
-            Open Dialogezaea
+            Open Dialog
           </div>
         </template>
 
@@ -55,7 +55,7 @@ import { DashboardType } from "@/interfaces/dashboard";
 
 const dashboardStore = useDashboardStore()
 const { dashboard, dashboards } = storeToRefs(dashboardStore)
-const { findDashboards, createDashboard, addDashboardElement } = dashboardStore
+const { findDashboards, createDashboard, addDashboardElement, findDashboard } = dashboardStore
 const dialog = ref(false)
 
 const items = ref([{
@@ -74,23 +74,29 @@ const title = ref('')
 const dashboard_type = ref('')
 const height = ref('')
 const width = ref('')
+const selected_dashboard = ref('')
 const handleCreateDashboard = async () => {
   await createDashboard(title.value)
   title.value = ''
+  await findDashboards()
 }
 
 const handleAddDashboardElement = async () => {
   await addDashboardElement({
-    dashboard_id: dashboard.value.id,
+    dashboard_id: dashboard.value?.id,
     dashboard_type: dashboard_type.value,
     position: dashboard.value?.dashboard_elements?.length ? dashboard.value?.dashboard_elements?.length + 1 : 0,
-    height: height.value,
-    width: width.value
+    height: parseInt(height.value),
+    width: parseInt(width.value)
   })
 
   dashboard_type.value = ''
   height.value = ''
   width.value = ''
+}
+
+const handleFindDashboard = async () => {
+  await findDashboard(selected_dashboard.value)
 }
 
 onMounted(async () => {

@@ -16,7 +16,7 @@ export class Dashboard_elementsController {
     @Roles('WEBMASTER')
     create(@Request() request, @Body() createDashboardElementDto: CreateDashboardElementsDto) {
         const {user} = request
-        return this.dashboardElementService.create({ createDashboardDto: createDashboardElementDto, user_id: user.sub });
+        return this.dashboardElementService.create({ createDashboardDto: createDashboardElementDto});
     }
 
     @Get()
@@ -24,13 +24,6 @@ export class Dashboard_elementsController {
     @Roles('WEBMASTER')
     findAll(@Request() request) {
         const {user} = request
-        return this.dashboardElementService.findAllDashboard(user.sub);
-    }
-
-    @Get(':id')
-    @UseGuards(AuthGuard, RolesGuard)
-    @Roles('WEBMASTER')
-    findOne(@Param('id') id: string) {
-        return this.dashboardElementService.findDashboard(id);
+        return this.dashboardElementService.findDashboardElements(user.sub);
     }
 }
