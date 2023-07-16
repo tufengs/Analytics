@@ -17,7 +17,7 @@
       <div class="flex flex-col gap-4">
         <v-btn
           @click="submitRegister"
-          color="teal"
+          color="purple-darken-3"
           block
         >
           Confirm

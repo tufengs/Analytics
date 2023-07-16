@@ -14,7 +14,7 @@
       <div class="flex flex-col gap-4">
         <v-btn
           @click="submitLogin"
-          color="teal"
+          color="purple-darken-3"
           block
         >
           Login
