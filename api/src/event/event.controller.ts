@@ -33,6 +33,7 @@ export class DataController {
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('WEBMASTER')
+  @UseGuards(SecretGuard)
   findAll(@Headers() headers) {
     const app_id = headers['app-id'];
     const app_secret = headers['app-secret'];
@@ -42,10 +43,11 @@ export class DataController {
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('WEBMASTER')
+  @UseGuards(SecretGuard)
   getAppStats() {
 
   }
-  
+
   // TODO: Rajouter RoleGuard ADMIN
   @Get()
   @UseGuards(AuthGuard, RolesGuard)
@@ -55,6 +57,7 @@ export class DataController {
   }
 
   @Get(':id')
+  @UseGuards(SecretGuard)
   findOne(@Headers() headers, @Param('id') id: string) {
     const app_id = headers['app-id'];
     const app_secret = headers['app-secret'];
@@ -62,6 +65,7 @@ export class DataController {
   }
 
   @Patch(':id')
+  @UseGuards(SecretGuard)
   update(
     @Headers() headers,
     @Param('id') id: string,
@@ -73,6 +77,7 @@ export class DataController {
   }
 
   @Delete(':id')
+  @UseGuards(SecretGuard)
   remove(@Param('id') id: string) {
     return this.dataService.remove(+id);
   }

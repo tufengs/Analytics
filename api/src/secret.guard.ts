@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ApplicationsService } from './applications/applications.service';
+import { cp } from 'fs';
 
 @Injectable()
 export class SecretGuard implements CanActivate {
@@ -11,12 +12,13 @@ export class SecretGuard implements CanActivate {
     const app_id = request.headers['app-id'];
     const secret_id = request.headers['app-secret'];
 
-    // const app = this.applicationsService.findOneWithSecret(app_id, secret_id);
-    // app.then((app) => {
+    let result = false;
 
-    //   console.log(app)
-    // })
+    this.applicationsService.findOneWithSecret(app_id, secret_id).then(app => {
+      if (app)
+        result = true
+    })
 
-    return false
+    return result;
   }
 }
