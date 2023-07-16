@@ -52,6 +52,7 @@ const copyToClipboard = (id: string) => {
 
 const create = async () => {
   try {
+    if (!comment.value) return createToast('Please enter a tag name', { type: 'warning', position: 'bottom-right' });
     await createTag({ comment: comment.value });
     comment.value = "";
   } catch (error) {
