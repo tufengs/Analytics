@@ -1,28 +1,26 @@
 const compressPoints = (points: { x: number, y: number }[]) => {
-    const compressed: { x: number, y: number, v?: number }[] = [];
+    const compressed: number[][] = [];
 
     const grid: number = 15;
 
     for (let i = 0; i < points.length; i++) {
         let { x, y } = points[i];
 
-        const adjustedPoint = {
-            x: Math.round(x / grid) * grid,
-            y: Math.round(y / grid) * grid,
-        };
+        const adjustedPoint = [
+            Math.round(x / grid) * grid,
+            Math.round(y / grid) * grid,
+            1,
+        ];
 
         const existingPoint = compressed.find(p =>
-            p.x === adjustedPoint.x &&
-            p.y === adjustedPoint.y
+            p[0] === adjustedPoint[0] &&
+            p[1] === adjustedPoint[1]
         );
 
         if (existingPoint) {
-            if (!existingPoint.v) {
-                existingPoint.v = 1;
-            }
-            existingPoint.v++;
+            existingPoint[2]++;
         } else {
-            compressed.push({ ...adjustedPoint });
+            compressed.push(adjustedPoint);
         }
     }
 
