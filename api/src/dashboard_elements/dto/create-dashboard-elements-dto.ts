@@ -1,4 +1,9 @@
+import {DashboardType} from "@prisma/client";
+
 export class CreateDashboardElementsDto {
-    title: string
-    userId: string
+    dashboardId: string
+    dashboardType: DashboardType
+    position: number
+    height: number
+    width: number
 }

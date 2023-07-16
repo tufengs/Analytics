@@ -7,42 +7,30 @@ import {CreateDashboardElementsDto} from "./dto/create-dashboard-elements-dto";
 export class Dashboard_elementsService {
     constructor(private prismaService: PrismaService) {}
 
-    async create(payload: {createDashboardDto: CreateDashboardElementsDto, user_id: string}) {
-        return this.prismaService.dashboard.create({
+    async create(payload: {createDashboardDto: CreateDashboardElementsDto}) {
+        return this.prismaService.dashboardElement.create({
             data: {
-                userId: payload.user_id,
-                title: payload.createDashboardDto.title,
+                dashboardId: payload.createDashboardDto.dashboardId,
+                dashboardType: payload.createDashboardDto.dashboardType,
+                position: payload.createDashboardDto.position,
+                height: payload.createDashboardDto.height,
+                width: payload.createDashboardDto.width,
             }
         })
     }
 
     async remove(id: string) {
-        return this.prismaService.dashboard.delete({
+        return this.prismaService.dashboardElement.delete({
             where: {
                 id
             }
         })
     }
 
-    async findAllDashboard(userId: string) {
-        return this.prismaService.dashboard.findMany({
+    async findDashboardElements(dashboardId: string) {
+        return this.prismaService.dashboardElement.findMany({
             where: {
-                userId: userId
-            },
-            select: {
-                id: true,
-                title: true,
-            }
-        })
-    }
-
-    async findDashboard(id: string) {
-        return this.prismaService.dashboard.findMany({
-            where: {
-                id: id
-            },
-            include: {
-                dashboard_elements: true
+                dashboardId: dashboardId
             }
         })
     }

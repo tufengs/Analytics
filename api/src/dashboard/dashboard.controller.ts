@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Request, UseGuards} from '@nestjs/common';
 import {AuthGuard} from "../auth.guard";
 import {RolesGuard} from "../roles.guard";
 import {Roles} from "../roles.decorator";
@@ -22,16 +22,15 @@ export class DashboardController {
     @Get()
     @UseGuards(AuthGuard, RolesGuard)
     @Roles('WEBMASTER')
-    findAll(@Request() request, @Body() createDashboardDto: CreateDashboardDto) {
+    findAll(@Request() request) {
         const {user} = request
-        return this.dashboardService.create({ createDashboardDto: createDashboardDto, user_id: user.sub });
+        return this.dashboardService.findAllDashboard(user.sub);
     }
 
     @Get(':id')
     @UseGuards(AuthGuard, RolesGuard)
     @Roles('WEBMASTER')
-    findOne(@Request() request, @Body() createDashboardDto: CreateDashboardDto) {
-        const {user} = request
-        return this.dashboardService.create({ createDashboardDto: createDashboardDto, user_id: user.sub });
+    findOne(@Param('id') id: string) {
+        return this.dashboardService.findDashboard(id);
     }
 }

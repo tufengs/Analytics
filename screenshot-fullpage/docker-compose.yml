@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  puppeteer-chrome:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - 5001:5001

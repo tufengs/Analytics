@@ -24,10 +24,10 @@ export class DashboardService {
         })
     }
 
-    async findAllDashboard(id: string) {
+    async findAllDashboard(userId: string) {
         return this.prismaService.dashboard.findMany({
             where: {
-                id: id
+                userId: userId
             },
             select: {
                 id: true,
@@ -37,9 +37,9 @@ export class DashboardService {
     }
 
     async findDashboard(id: string) {
-        return this.prismaService.dashboard.findMany({
+        return this.prismaService.dashboard.findUnique({
             where: {
-                id: id
+                id
             },
             include: {
                 dashboard_elements: true
