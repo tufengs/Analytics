@@ -24,7 +24,8 @@ export class UsersService {
   findAll() {
     return this.prismaService.user.findMany({
       where: {
-        role: "WEBMASTER"
+        role: "WEBMASTER",
+        validated: true
       }
     })
   }
@@ -43,6 +44,15 @@ export class UsersService {
       where: {
         id,
       },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        company: true,
+        baseUrl: true,
+        KBIS: true,
+        application: true,
+      },
     });
     
     if (!user) {
@@ -56,6 +66,16 @@ export class UsersService {
     const user = await this.prismaService.user.findUnique({
       where: {
         email,
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        role: true,
+        company: true,
+        baseUrl: true,
+        KBIS: true,
+        application: true,
       },
     });
 
@@ -78,7 +98,7 @@ export class UsersService {
   }
 
   async validateUser(id: string): Promise<any> {
-    const user = this.prismaService.user.update({
+    const user = await this.prismaService.user.update({
       where: {
         id,
       },
@@ -90,7 +110,7 @@ export class UsersService {
       }
     });
 
-    const application = this.prismaService.application.create({
+    const application = await this.prismaService.application.create({
       // @ts-ignore
       data: {
         userId: id

@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { EventSchema, Event } from './schemas/event.schema';
 import { JwtService } from '@nestjs/jwt';
+import { ApplicationsService } from 'src/applications/applications.service';
+import { PrismaService } from 'src/prisma.service';
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
@@ -22,6 +24,6 @@ import { JwtService } from '@nestjs/jwt';
     ]),
   ],
   controllers: [DataController],
-  providers: [JwtService, DataService],
+  providers: [JwtService, DataService, ApplicationsService, PrismaService],
 })
-export class DataModule {}
+export class DataModule { }

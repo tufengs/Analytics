@@ -30,7 +30,6 @@ export class AuthService {
 
   async signIn(email, pass) {
     const user = await this.usersService.findOneByEmail(email);
-
     const areEqual = await compare(pass, user.password);
 
     if (!areEqual) {
@@ -44,7 +43,12 @@ export class AuthService {
       throw new BadRequestException("Waiting for admin validation")
     }
 
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      app_id: user.application?.id
+    };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
