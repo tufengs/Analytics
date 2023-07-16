@@ -15,6 +15,8 @@ import { CredentialsModule } from './credentials/credentials.module';
 import { TagModule } from './tag/tag.module';
 import { PreferencesModule } from './preferences/preferences.module';
 import { FunnelModule } from './funnel/funnel.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { Dashboard_elementsModule } from './dashboard_elements/dashboard_elements.module';
 
 @Module({
   imports: [
@@ -35,8 +37,10 @@ import { FunnelModule } from './funnel/funnel.module';
     TagModule,
     PreferencesModule,
     FunnelModule,
+    DashboardModule,
+    Dashboard_elementsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController ],
   providers: [AppService, PrismaService, ConfigService],
 })
 export class AppModule {}
