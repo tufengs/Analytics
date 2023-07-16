@@ -4,9 +4,9 @@ import { clientWithoutAuth, client, token, tokenAsAdmin } from "@/service/axios"
 import type {CreateUserI, LoginUserI, PasswordForgotUserI, UpdateUserI, UserI} from "@/interfaces/user";
 export const useUserStore = defineStore('user', () => {
 
-  const currentUser = ref<UserI>(null)
-  const currentUserAdmin = ref<UserI>(null)
-  const user = ref<UserI>(null)
+  const currentUser = ref<UserI>()
+  const currentUserAdmin = ref<UserI>()
+  const user = ref<UserI>()
   const users = ref<UserI[]>([])
 
   const findUser = async (id: string) => {
@@ -92,7 +92,6 @@ export const useUserStore = defineStore('user', () => {
   const register = async (payload: CreateUserI): Promise<any> => {
     try {
       const res = await clientWithoutAuth.post('/auth/signup', payload)
-      currentUser.value = res.data;
     } catch ( error ) {
       throw error;
     }
