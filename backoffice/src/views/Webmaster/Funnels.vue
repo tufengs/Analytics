@@ -2,16 +2,10 @@
   <div class="w-full">
     <h2 class="text-slate-800 font-bold text-2xl">Funnels</h2>
     <div class="pt-3 flex items-center gap-x-3">
-      <v-select 
-        multiple 
-        :items="tags"
-        v-model="tagsToAdd" 
-        placeholder="Select tags"
-        density="compact" 
-        item-title="comment"
-        hide-details
-        return-object 
-      />
+      <v-text-field v-model="comment" density="compact" placeholder="Enter funnel name" hide-details
+        @keyup.enter="create" />
+      <v-select multiple :items="tags" v-model="tagsToAdd" placeholder="Select tags" density="compact"
+        item-title="comment" hide-details return-object />
       <v-btn @click="create" variant="tonal" color="purple-darken-3">Create</v-btn>
     </div>
 
@@ -32,25 +26,26 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from "vue";
-import {useFunnelStore} from "@/stores/funnel";
-import {useTagStore} from "@/stores/tag";
+import { ref, onMounted } from "vue";
+import { useFunnelStore } from "@/stores/funnel";
+import { useTagStore } from "@/stores/tag";
 import { storeToRefs } from "pinia";
 import { createToast } from "mosha-vue-toastify";
 const funnelStore = useFunnelStore();
 const tagStore = useTagStore();
 const { getTags } = tagStore;
-const {getFunnels, createFunnel} = funnelStore;
+const { getFunnels, createFunnel } = funnelStore;
 const { funnels } = storeToRefs(funnelStore);
 const tags = ref([]);
 const tagsToAdd = ref([])
+const comment = ref('')
 
 onMounted(async () => {
   try {
     await getFunnels();
     tags.value = await getTags();
   } catch (error) {
-    
+
   }
 })
 
@@ -66,11 +61,9 @@ const create = async () => {
     await createFunnel({ tags: tagsToAdd.value });
     tagsToAdd.value = [];
   } catch (error) {
-    
+
   }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -33,7 +33,7 @@ app.use(
             },
             {
                 'to': '/',
-                'tag': '1g3sd5fg',
+                'tag': '64b42d9ea762eac125da32af',
             },
         ]
     }

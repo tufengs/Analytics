@@ -10,9 +10,7 @@ export class DataService {
   constructor(@InjectConnection() private connection: Connection) { }
 
   async create(createDatumDto: CreateDatumDto) {
-    console.log(createDatumDto)
     const t = this.connection.model(Event.name).create(createDatumDto);
-    console.log(t)
     return t;
   }
 
@@ -22,12 +20,12 @@ export class DataService {
 
   appStat(app_id: string) {
     const sessionsNumber = this.connection.model(Event.name).find({ app_id }).count();
-    
+
     return {
       sessionsNumber,
     }
   }
-  
+
   findEventsByTag(app_id: string, tag: string) {
     return this.connection.model(Event.name).find(
       {
