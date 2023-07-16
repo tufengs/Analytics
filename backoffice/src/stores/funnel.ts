@@ -15,7 +15,7 @@ export const useFunnelStore = defineStore('funnel', () => {
     }
   }
 
-  const createFunnel = async (funnel: { tags: string[] }) => {
+  const createFunnel = async (funnel: { comment: string, tags: string[] }) => {
     try {
       const res = await client.post('/funnel', funnel);
       // @ts-ignore
