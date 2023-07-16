@@ -29,7 +29,6 @@ model Application {
   userId      String      @unique @db.Uuid
   user        User        @relation(fields: [userId], references: [id])
   credentials Credential?
-  tag         Tag?
 }
 
 model Credential {
@@ -44,13 +43,6 @@ model Preference {
   chartType  String
   dimensions String
   user       User   @relation(fields: [userId], references: [id])
-}
-
-model Tag {
-  id            String       @id
-  applicationId String?      @unique @db.Uuid
-  comment       String
-  application   Application? @relation(fields: [applicationId], references: [id])
 }
 
 model File {

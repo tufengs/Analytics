@@ -14,6 +14,7 @@ import { CredentialsService } from './credentials/credentials.service';
 import { CredentialsModule } from './credentials/credentials.module';
 import { TagModule } from './tag/tag.module';
 import { PreferencesModule } from './preferences/preferences.module';
+import { FunnelModule } from './funnel/funnel.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PreferencesModule } from './preferences/preferences.module';
     CredentialsModule,
     TagModule,
     PreferencesModule,
+    FunnelModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, ConfigService],
