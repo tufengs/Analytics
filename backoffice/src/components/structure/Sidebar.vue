@@ -6,6 +6,7 @@
       >
         <v-list nav>
           <v-list-item
+            v-if="isAdmin()"
             v-for="path in admin_path"
             :prepend-icon="path.icon"
             :title="path.title"
@@ -13,6 +14,7 @@
             :to="{name: path.to}"
           />
           <v-list-item
+            v-if="isWebmaster()"
             v-for="path in webmaster_path"
             :prepend-icon="path.icon"
             :title="path.title"
@@ -28,6 +30,7 @@
 <script setup lang='ts'>
 
 import {ref} from "vue";
+import {useUserStore} from "@/stores/user";
 
 const admin_path = ref([
   {
@@ -70,6 +73,11 @@ const webmaster_path = ref([
     to: 'webmaster-profile',
   }
 ])
+
+const userStore = useUserStore()
+const {isAdmin, isWebmaster} = userStore
+
+const tab = ref<string>('')
 </script>
 
 <style scoped>

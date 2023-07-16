@@ -1,13 +1,70 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { clientWithoutAuth, client, token } from "@/service/axios"
+import { clientWithoutAuth, client, token, tokenAsAdmin } from "@/service/axios"
 import type {CreateUserI, LoginUserI, PasswordForgotUserI, UpdateUserI, UserI} from "@/interfaces/user";
-import {useRouter} from "vue-router";
 export const useUserStore = defineStore('user', () => {
 
-  const currentUser = ref<UserI>()
-  const user = ref<UserI>()
-  const users = ref<UserI[]>()
+  const currentUser = ref<UserI>(null)
+  const currentUserAdmin = ref<UserI>(null)
+  const user = ref<UserI>(null)
+  const users = ref<UserI[]>([])
+
+  const findUser = async (id: string) => {
+    try {
+      const res = await client.get(`/users/${id}`)
+      user.value = res.data;
+    } catch ( error ) {
+      throw error;
+    }
+  }
+
+  const findUsers = async () => {
+    try {
+      const res = await client.get(`/users`)
+      users.value = res.data;
+    } catch ( error ) {
+      throw error;
+    }
+  }
+
+  const findUsersRequest = async () => {
+    try {
+      const res = await client.get(`/users/request`)
+      users.value = res.data;
+    } catch ( error ) {
+      throw error;
+    }
+  }
+
+  const validateUser = async(id: string) => {
+    try {
+      const res = await client.get(`/users/${id}/validate`)
+      return res.data
+    } catch ( error ) {
+      throw error;
+    }
+  }
+
+  const impersonateUser = async(id: string) => {
+    try {
+      const res = await client.get(`/auth/impersonate/${id}`)
+      tokenAsAdmin.value = token.value
+      token.value = res.data.access_token
+      await profile()
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  const logoutImpersonateUser = async () => {
+    try {
+      token.value = tokenAsAdmin.value
+      tokenAsAdmin.value = ''
+      await profile()
+    } catch (e) {
+      throw e;
+    }
+  }
 
   const login = async (payload: LoginUserI): Promise<any> => {
     try {
@@ -86,5 +143,5 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  return { currentUser, user, users, login, register, logout, passwordForgot, profile, isAdmin, isWebmaster }
+  return { currentUser, user, users, findUser, findUsers, findUsersRequest, updateUser, updateCurrentUser, validateUser, login, register, logout, passwordForgot, profile, isAdmin, isWebmaster, impersonateUser, logoutImpersonateUser }
 })

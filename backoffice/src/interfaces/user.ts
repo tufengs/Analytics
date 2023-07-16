@@ -5,7 +5,7 @@ export interface UserI {
     kbis: string
     role: string
     phoneNumber: string
-    websiteUrl: string
+    baseUrl: string
 }
 
 export interface CreateUserI {

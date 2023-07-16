@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HeaderC from './components/Header.vue';
+import ImpersonateBar from "@/components/structure/ImpersonateBar.vue";
 </script>
 
 <template>
@@ -8,4 +9,6 @@ import HeaderC from './components/Header.vue';
     <HeaderC></HeaderC>
     <RouterView class="pt-5" />
   </div>
+  <impersonate-bar/>
+  ezaeza
 </template>

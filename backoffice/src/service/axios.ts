@@ -3,6 +3,7 @@ import { useStorage } from "@vueuse/core";
 import { computed } from "vue";
 import router from "@/router";
 export const token = useStorage('access_token', '');
+export const tokenAsAdmin = useStorage('access_token_admin', '');
 
 const config = computed(() => {
     return {

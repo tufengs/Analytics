@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="text-2xl p-4 font-bold">
-      Liste des webmaster + impersonate
+      Liste des webmasters
     </div>
     <div class="p-8 w-full">
       <v-table>
@@ -29,13 +29,13 @@
         </thead>
         <tbody>
         <tr
-          v-for="item in desserts"
-          :key="item.id"
+          v-for="user in users"
+          :key="user.id"
         >
-          <td>{{ item.email }}</td>
-          <td>{{ item.phoneNumber }}</td>
-          <td>{{ item.company }}</td>
-          <td>{{ item.url }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.company }}</td>
+          <td>{{ user.baseUrl }}</td>
           <td>
             <div class="flex items-center justify-center">
               <v-btn
@@ -52,7 +52,7 @@
                 icon="mdi-account-box"
                 class="rounded"
                 variant="plain"
-                @click="handleImpersonateUser(item.id)"
+                @click="handleImpersonateUser(user.id)"
               />
             </div>
           </td>
@@ -65,21 +65,23 @@
 
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useUserStore} from "@/stores/user";
+import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
 
-const desserts = ref([
-  {
-    id: '123',
-    email: 'Frozen Yogurt',
-    phoneNumber: 159,
-    company: 159,
-    kbis: '',
-    url: 159,
-  },
-])
+const userStore = useUserStore()
+const {users} = storeToRefs(userStore)
+const {findUsers, impersonateUser} = userStore
+const router = useRouter()
 
-const handleImpersonateUser = (id: string) => {
+onMounted(async () => {
+  await findUsers()
+})
+const handleImpersonateUser = async (id: string) => {
+  await impersonateUser(id);
 
+  await router.push({name: 'webmaster'})
 }
 </script>
 

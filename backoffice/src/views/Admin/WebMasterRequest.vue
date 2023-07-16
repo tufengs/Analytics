@@ -27,15 +27,15 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="users.length">
           <tr
-            v-for="item in desserts"
-            :key="item.id"
+            v-for="user in users"
+            :key="user.id"
           >
-            <td>{{ item.email }}</td>
-            <td>{{ item.phoneNumber }}</td>
-            <td>{{ item.company }}</td>
-            <td>{{ item.url }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>{{ user.company }}</td>
+            <td>{{ user.baseUrl }}</td>
             <td>
               <div class="flex items-center justify-center">
                 <v-btn
@@ -53,14 +53,7 @@
                   class="rounded"
                   color="green"
                   variant="plain"
-                  @click="handleAcceptRequest(item.id)"
-                />
-                <v-btn
-                  icon="mdi-close-box"
-                  class="rounded"
-                  color="red"
-                  variant="plain"
-                  @click="handleRefuseRequest(item.id)"
+                  @click="handleAcceptRequest(user.id)"
                 />
               </div>
             </td>
@@ -72,26 +65,21 @@
 </template>
 
 <script setup lang="ts">
+import {onMounted, ref} from "vue";
+import {useUserStore} from "@/stores/user";
+import {storeToRefs} from "pinia";
+import {UserI} from "@/interfaces/user";
 
-import {ref} from "vue";
+const userStore = useUserStore()
+const {users} = storeToRefs(userStore)
+const {findUsersRequest, validateUser} = userStore
 
-const desserts = ref([
-  {
-    id: '123',
-    email: 'Frozen Yogurt',
-    phoneNumber: 159,
-    company: 159,
-    kbis: '',
-    url: 159,
-  },
-])
-
-const handleAcceptRequest = (id: string) => {
-
-}
-
-const handleRefuseRequest = (id: string) => {
-
+onMounted(async () => {
+  await findUsersRequest();
+})
+const handleAcceptRequest = async (id: string) => {
+  const res = await validateUser(id)
+  users.value.filter((user: UserI) => user.id !== res.id);
 }
 </script>
 
