@@ -9,6 +9,22 @@ export const useUserStore = defineStore('user', () => {
   const user = ref<UserI>()
   const users = ref<UserI[]>()
 
+  const isAdmin = (): boolean => {
+    if (currentUser.value) {
+      return currentUser.value.role === 'ADMIN'
+    } else {
+      return false
+    }
+  }
+
+  const isWebmaster = (): boolean => {
+    if (currentUser.value) {
+      return currentUser.value.role === 'WEBMASTER'
+    } else {
+      return false
+    }
+  }
+
   const login = async (payload: LoginUserI): Promise<any> => {
     try {
       const res = await clientWithoutAuth.post('/auth/login', payload)
@@ -67,22 +83,6 @@ export const useUserStore = defineStore('user', () => {
       await clientWithoutAuth.post('', payload)
     } catch ( error ) {
       throw error;
-    }
-  }
-
-  const isAdmin = (): boolean => {
-    if (currentUser.value) {
-      return currentUser.value.role === 'ADMIN'
-    } else {
-      return false
-    }
-  }
-
-  const isWebmaster = (): boolean => {
-    if (currentUser.value) {
-      return currentUser.value.role === 'WEBMASTER'
-    } else {
-      return false
     }
   }
 
