@@ -1,9 +1,9 @@
-import {Credential, User} from "@prisma/client";
+import { Credential, User } from "@prisma/client";
 
 export class Application {
     id: string;
     user: User;
-    credential: Credential
+    credentials: Credential[]
 }
 
 export enum Role {
