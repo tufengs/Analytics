@@ -52,6 +52,7 @@ export class UsersService {
         baseUrl: true,
         KBIS: true,
         application: true,
+        validated: true
       },
     });
     
@@ -76,6 +77,7 @@ export class UsersService {
         baseUrl: true,
         KBIS: true,
         application: true,
+        validated: true
       },
     });
 
