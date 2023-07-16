@@ -17,6 +17,14 @@ export class DataService {
     return this.connection.model(Event.name).find({ app_id });
   }
 
+  appStat(app_id: string) {
+    const sessionsNumber = this.connection.model(Event.name).find({ app_id }).count();
+    
+    return {
+      sessionsNumber,
+    }
+  }
+
   findAll() {
     return this.connection.model(Event.name).find({});
   }

@@ -42,8 +42,9 @@ export class DataController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('WEBMASTER')
   @UseGuards(SecretGuard)
-  getAppStats() {
-
+  getAppStats(@Headers() headers) {
+    const app_id = headers['app-id'];
+    return this.dataService.appStat(app_id);
   }
 
   // TODO: Rajouter RoleGuard ADMIN
