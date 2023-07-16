@@ -1,14 +1,17 @@
 <template>
   <div class="w-full">
     <div class="text-2xl p-4 font-bold">
-      Profile
+      Page de profile + Credentials
     </div>
     <div v-if='user' class="p-8 w-full flex flex-col gap-5 items-center justify-center">
       <v-avatar color="surface-variant" size="100"></v-avatar>
-      <v-text-field v-model="user.email" density="compact" variant="outlined" label="Email" class="w-full" disabled/>
-      <v-text-field v-model="user.company" density="compact" variant="outlined" label="Company name" class="w-full"/>
-      <v-text-field v-model="user.baseUrl" density="compact" variant="outlined" label="Base url" class="w-full"/>
-      <v-btn @click="update" variant="tonal" color="purple-darken-3">Update</v-btn>
+      <v-text-field density="compact" type="file" variant="outlined" label="Image de profil" class="w-full"/>
+      <v-text-field density="compact" variant="outlined" label="Email" class="w-full"/>
+      <v-text-field density="compact" variant="outlined" label="Nom de la société" class="w-full"/>
+      <v-text-field density="compact" type="file" variant="outlined" label="KBIS" class="w-full"/>
+      <v-text-field density="compact" variant="outlined" label="Numéro de téléphone" class="w-full"/>
+      <v-text-field density="compact" variant="outlined" label="Url de votre site" class="w-full"/>
+      <v-btn variant="outlined" color="blue">Modifier</v-btn>
     </div>
   </div>
 </template>

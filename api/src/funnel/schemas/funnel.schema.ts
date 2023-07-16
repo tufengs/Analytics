@@ -7,7 +7,7 @@ export type FunnelDocument = HydratedDocument<Funnel>;
 @Schema()
 export class Funnel {
   @Prop()
-  name: string;
+  comment: string;
 
   @Prop()
   app_id: string;

@@ -28,7 +28,13 @@ const debouncePosition = () => {
       sendEvent({
         event: key,
         tag: events[key],
-        data: compressPoints(value),
+        data: {
+          screen: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+          },
+          points: compressPoints(value)
+        },
       }).then(() => {
         delete eventPositions[key];
       })
