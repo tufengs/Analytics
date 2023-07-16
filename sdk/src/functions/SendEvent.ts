@@ -1,4 +1,4 @@
-import { options } from "../components/_SDK";
+import { config } from "../components/_SDK";
 import { load as fpLoad, } from '@fingerprintjs/fingerprintjs';
 import { checkIdle } from "./Idle";
 import axios from "axios";
@@ -27,13 +27,13 @@ const sendEvent = async (data: { event: string, tag: string, data?: object | str
 
         checkIdle();
 
-        await axios.post(`${options.SDK_API_URL}`,
+        await axios.post(`${config.SDK_API_URL}`,
             { ...obj },
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'App-Id': options.SDK_APP_ID,
-                    'App-Secret': options.SDK_APP_SECRET,
+                    'App-Id': config.SDK_APP_ID,
+                    'App-Secret': config.SDK_APP_SECRET,
                 },
             }
         );
