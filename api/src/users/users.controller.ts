@@ -19,7 +19,7 @@ import { Roles } from 'src/roles.decorator';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -36,7 +36,7 @@ export class UsersController {
   @Get('request')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('ADMIN')
-  findAllRequest(){
+  findAllRequest() {
     return this.usersService.findAllRequest();
   }
 
@@ -65,12 +65,13 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Patch('/self')
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles('ADMIN', 'WEBMASTER')
+  @Patch('update/me')
+  @UseGuards(AuthGuard)
+  @Roles('WEBMASTER', 'ADMIN')
   selfUpdate(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
-    const {user} = req
-    return this.usersService.update(user.id, updateUserDto);
+    const { user } = req
+    console.log(user)
+    return this.usersService.update(user.sub, updateUserDto);
   }
 
   @Delete(':id')
