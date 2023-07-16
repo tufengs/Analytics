@@ -20,6 +20,7 @@ model User {
   application   Application?
   KBIS          File?
   preferences   Preference?
+  dashboard     Dashboard[]
 
   @@map("user")
 }
@@ -33,7 +34,7 @@ model Application {
 
 model Credential {
   id            String      @id @default(uuid()) @db.Uuid
-  applicationId String      @unique @db.Uuid
+  applicationId String      @db.Uuid
   application   Application @relation(fields: [applicationId], references: [id])
   secret        String      @default(uuid()) @db.Uuid
   title         String
@@ -59,6 +60,30 @@ model File {
   path         String
   encoding     String
   size         Int
+}
+
+model Dashboard {
+  id            String       @id @default(uuid()) @db.Uuid
+  userId        String       @db.Uuid
+  user          User?        @relation(fields: [userId], references: [id])
+  dashboard_elements DashboardElement[]
+  title         String       @default("dashboard")
+}
+
+model DashboardElement {
+  id String @id @default(uuid()) @db.Uuid
+  dashboardId String @db.Uuid
+  dashboard Dashboard @relation(fields: [dashboardId], references: [id])
+  dashboardType DashboardType
+  height        Int @default(200)
+  width         Int @default(200)
+  position Int
+}
+
+enum DashboardType {
+  HEATMAP
+  KPI
+  GRAPH
 }
 
 enum Role {
