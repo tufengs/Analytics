@@ -15,6 +15,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await client.get(`/users/${id}`)
       user.value = res.data;
+      return res.data
     } catch (error) {
       throw error;
     }
@@ -107,7 +108,7 @@ export const useUserStore = defineStore('user', () => {
 
   const updateCurrentUser = async (payload: UpdateUserI): Promise<void> => {
     try {
-      const res = await clientWithoutAuth.patch(`/users`, payload)
+      const res = await client.patch(`/users/update/me`, payload)
       user.value = res.data
     } catch (error) {
       throw error;

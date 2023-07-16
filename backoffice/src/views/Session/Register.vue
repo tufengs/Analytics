@@ -11,13 +11,13 @@
         <v-text-field v-model="email" density="compact" variant="outlined" label="Email" type="email" />
         <v-text-field v-model="password" density="compact" variant="outlined" label="Password" type="password" />
         <v-text-field v-model="company" density="compact" variant="outlined" label="Company name"/>
-        <v-text-field variant="outlined" density="compact" label="KBIS"/>
+        <v-input-file variant="outlined" density="compact" label="KBIS"/>
         <v-text-field v-model="baseUrl" density="compact" variant="outlined" label="Base url of yout website" />
       </div>
       <div class="flex flex-col gap-4">
         <v-btn
           @click="submitRegister"
-          color="teal"
+          color="purple-darken-3"
           block
         >
           Confirm

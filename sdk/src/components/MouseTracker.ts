@@ -30,8 +30,8 @@ const debouncePosition = () => {
         tag: events[key],
         data: {
           screen: {
-            width: window.screen.width,
-            height: window.screen.height,
+            width: window.innerWidth,
+            height: window.innerHeight,
           },
           points: compressPoints(value)
         },

@@ -7,7 +7,7 @@ import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     return this.prismaService.user.create({
@@ -55,11 +55,11 @@ export class UsersService {
         validated: true
       },
     });
-    
+
     if (!user) {
       throw new BadRequestException();
     }
-  
+
     return user;
   }
 
@@ -89,6 +89,7 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    console.log('service')
     return this.prismaService.user.update({
       where: {
         id,
