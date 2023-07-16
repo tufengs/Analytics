@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id            String       @id @db.Uuid
+  id            String       @id @default(uuid()) @db.Uuid
   email         String       @unique
   password      String
   role          Role         @default(WEBMASTER)
@@ -25,20 +25,20 @@ model User {
 }
 
 model Application {
-  id          String      @id @db.Uuid
+  id          String      @id @default(uuid()) @db.Uuid
   userId      String      @unique @db.Uuid
   user        User        @relation(fields: [userId], references: [id])
   credentials Credential?
 }
 
 model Credential {
-  id            String      @id @db.Uuid
+  id            String      @id @default(uuid()) @db.Uuid
   applicationId String      @unique @db.Uuid
   application   Application @relation(fields: [applicationId], references: [id])
 }
 
 model Preference {
-  id         String @id @db.Uuid
+  id         String @id @default(uuid()) @db.Uuid
   userId     String @unique @db.Uuid
   chartType  String
   dimensions String
@@ -46,7 +46,7 @@ model Preference {
 }
 
 model File {
-  id           String  @id @db.Uuid
+  id           String  @id @default(uuid()) @db.Uuid
   userId       String? @unique @db.Uuid
   fieldname    String
   originalname String
