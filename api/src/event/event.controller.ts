@@ -39,6 +39,13 @@ export class DataController {
     return this.dataService.findAllByApp(app_id, app_secret);
   }
 
+  @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('WEBMASTER')
+  getAppStats() {
+
+  }
+  
   // TODO: Rajouter RoleGuard ADMIN
   @Get()
   @UseGuards(AuthGuard, RolesGuard)

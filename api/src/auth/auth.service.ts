@@ -35,11 +35,8 @@ export class AuthService {
     if (!areEqual) {
       throw new UnauthorizedException();
     }
-
-    console.log(user)
-
     // @ts-ignore
-    if (!user.validated) {
+    if (user.role === 'WEBMASTER' && !user.validated) {
       throw new BadRequestException("Waiting for admin validation")
     }
 
