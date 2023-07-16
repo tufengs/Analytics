@@ -6,7 +6,8 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -32,16 +33,44 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':email')
-  findOne(@Param('email') email: string) {
-    return this.usersService.findOne(email);
+  @Get('request')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  findAllRequest(){
+    return this.usersService.findAllRequest();
+  }
+
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  @Get('email/:email')
+  findOneByEmail(@Param('email') email: string) {
+    return this.usersService.findOneByEmail(email);
+  }
+
+  @Get(':id/validate')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  validateUser(@Param('id') id: string) {
+    return this.usersService.validateUser(id);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('ADMIN', 'WEBMASTER')
+  @Roles('ADMIN')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @Patch('/self')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('ADMIN', 'WEBMASTER')
+  selfUpdate(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
+    const {user} = req
+    return this.usersService.update(user.id, updateUserDto);
   }
 
   @Delete(':id')

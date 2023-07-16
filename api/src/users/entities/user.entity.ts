@@ -1,3 +1,5 @@
+import {Application} from "@prisma/client";
+
 export class User {
   id: string;
   email: string;
@@ -6,7 +8,8 @@ export class User {
   company: string;
   baseUrl: string;
   KBIS?: File;
-  application?: object;
+  application?: Application;
+  validated: boolean;
 }
 
 export enum Role {

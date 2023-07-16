@@ -8,6 +8,10 @@ import { ConfigService, ConfigModule } from '@nestjs/config/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataModule } from './event/event.module';
+import { ApplicationsModule } from './applications/applications.module';
+import { CredentialsController } from './credentials/credentials.controller';
+import { CredentialsService } from './credentials/credentials.service';
+import { CredentialsModule } from './credentials/credentials.module';
 import { TagModule } from './tag/tag.module';
 import { PreferencesModule } from './preferences/preferences.module';
 
@@ -25,6 +29,8 @@ import { PreferencesModule } from './preferences/preferences.module';
       }),
       inject: [ConfigService],
     }),
+    ApplicationsModule,
+    CredentialsModule,
     TagModule,
     PreferencesModule,
   ],

@@ -6,7 +6,7 @@ import {
   Post,
   HttpCode,
   HttpStatus,
-  UseGuards,
+  UseGuards, Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '../auth.guard';
@@ -33,9 +33,16 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles('WEBMASTER')
+  @Roles('WEBMASTER', 'ADMIN')
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
+  }
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('WEBMASTER', 'ADMIN')
+  @Get('impersonate/:id')
+  impersonate(@Param('id') id: string) {
+    return this.authService.impersonate(id);
   }
 }

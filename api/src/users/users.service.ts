@@ -21,18 +21,30 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.prismaService.user.findMany({
+      where: {
+        role: "WEBMASTER"
+      }
+    })
   }
 
-  async findOne(email: string) {
+  findAllRequest() {
+    return this.prismaService.user.findMany({
+      where: {
+        validated: false,
+        role: "WEBMASTER"
+      }
+    })
+  }
+
+  async findOne(id: string) {
     const user = await this.prismaService.user.findUnique({
       where: {
-        email,
+        id,
       },
       select: {
         id: true,
         email: true,
-        password: true,
         role: true,
         company: true,
         baseUrl: true,
@@ -48,8 +60,32 @@ export class UsersService {
     return user;
   }
 
+  async findOneByEmail(email: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        role: true,
+        company: true,
+        baseUrl: true,
+        KBIS: true,
+        application: true,
+      },
+    });
+
+    if (!user) {
+      throw new BadRequestException();
+    }
+
+    return user;
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    return await this.prismaService.user.update({
+    return this.prismaService.user.update({
       where: {
         id,
       },
@@ -57,6 +93,25 @@ export class UsersService {
         ...updateUserDto,
       },
     });
+  }
+
+  async validateUser(id: string): Promise<User> {
+    const user = this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        validated: true
+      }
+    });
+
+    /*this.prismaService.application.create({
+      data: {
+        userId: id
+      }
+    })*/
+
+    return user
   }
 
   remove(id: number) {
