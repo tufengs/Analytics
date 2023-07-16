@@ -13,18 +13,18 @@ export class DataService {
     return this.connection.model(Event.name).create(createDatumDto);
   }
 
-  findAllByApp(app_id: string, app_secret: string) {
-    return this.connection.model(Event.name).find({ app_id, app_secret });
+  findAllByApp(app_id: string) {
+    return this.connection.model(Event.name).find({ app_id });
   }
 
   findAll() {
     return this.connection.model(Event.name).find({});
   }
 
-  findOne(app_id: string, app_secret: string, id: number) {
+  findOne(app_id: string, id: number) {
     return this.connection
       .model(Event.name)
-      .find({ app_id, app_secret, _id: id });
+      .find({ app_id, _id: id });
   }
 
   update(id: string, updateDatumDto: UpdateDatumDto) {
