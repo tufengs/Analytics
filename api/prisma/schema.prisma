@@ -42,7 +42,7 @@ model Application {
 
 model Credential {
   id    String @id @default(uuid()) @db.Uuid
-  applicationId String @unique
+  applicationId String @unique @db.Uuid
   application Application @relation(fields: [applicationId], references: [id])
 }
 

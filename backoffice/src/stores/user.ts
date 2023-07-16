@@ -50,6 +50,7 @@ export const useUserStore = defineStore('user', () => {
       const res = await client.get(`/auth/impersonate/${id}`)
       tokenAsAdmin.value = token.value
       token.value = res.data.access_token
+      currentUserAdmin.value = currentUser.value
       await profile()
     } catch (e) {
       throw e;
@@ -60,6 +61,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       token.value = tokenAsAdmin.value
       tokenAsAdmin.value = ''
+      currentUserAdmin.value = null
       await profile()
     } catch (e) {
       throw e;

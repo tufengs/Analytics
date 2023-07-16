@@ -23,7 +23,7 @@
             KBIS
           </th>
           <th class="text-center">
-            Actions
+            Impersonate
           </th>
         </tr>
         </thead>

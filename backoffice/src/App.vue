@@ -8,7 +8,6 @@ import ImpersonateBar from "@/components/structure/ImpersonateBar.vue";
   <div class="h-screen">
     <HeaderC></HeaderC>
     <RouterView class="pt-5" />
+    <impersonate-bar/>
   </div>
-  <impersonate-bar/>
-  ezaeza
 </template>

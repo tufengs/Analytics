@@ -23,7 +23,7 @@
               KBIS
             </th>
             <th class="text-center">
-              Actions
+              Accepter
             </th>
           </tr>
         </thead>

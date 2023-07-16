@@ -95,21 +95,24 @@ export class UsersService {
     });
   }
 
-  async validateUser(id: string): Promise<User> {
+  async validateUser(id: string): Promise<any> {
     const user = this.prismaService.user.update({
       where: {
         id,
       },
       data: {
         validated: true
+      },
+      include: {
+        application: true
       }
     });
 
-    /*this.prismaService.application.create({
+    const application = this.prismaService.application.create({
       data: {
         userId: id
       }
-    })*/
+    })
 
     return user
   }

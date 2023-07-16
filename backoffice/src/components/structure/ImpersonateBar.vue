@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="tokenAsAdmin"
     class="absolute bottom-0 w-full h-20 bg-neutral-900 text-white flex items-center p-10"
   >
     You are currently impersonating {{currentUser?.email}} <div class="underline px-3 cursor-pointer hover:text-slate-300" @click="handleLogoutImpersonateUser">Disconnect</div>
