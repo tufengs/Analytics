@@ -37,6 +37,8 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    console.log(user)
+
     // @ts-ignore
     if (!user.validated) {
       throw new BadRequestException("Waiting for admin validation")

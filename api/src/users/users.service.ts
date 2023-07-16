@@ -11,6 +11,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     return this.prismaService.user.create({
+      // @ts-ignore
       data: {
         email: createUserDto.email,
         company: createUserDto.company,
@@ -42,15 +43,6 @@ export class UsersService {
       where: {
         id,
       },
-      select: {
-        id: true,
-        email: true,
-        role: true,
-        company: true,
-        baseUrl: true,
-        KBIS: true,
-        application: true,
-      },
     });
     
     if (!user) {
@@ -64,16 +56,6 @@ export class UsersService {
     const user = await this.prismaService.user.findUnique({
       where: {
         email,
-      },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-        role: true,
-        company: true,
-        baseUrl: true,
-        KBIS: true,
-        application: true,
       },
     });
 
@@ -109,6 +91,7 @@ export class UsersService {
     });
 
     const application = this.prismaService.application.create({
+      // @ts-ignore
       data: {
         userId: id
       }
