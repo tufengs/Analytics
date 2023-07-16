@@ -7,24 +7,42 @@ import { Event } from './schemas/event.schema';
 
 @Injectable()
 export class DataService {
-  constructor(@InjectConnection() private connection: Connection) {}
-  
+  constructor(@InjectConnection() private connection: Connection) { }
+
   async create(createDatumDto: CreateDatumDto) {
-    return this.connection.model(Event.name).create(createDatumDto);
+    const t = this.connection.model(Event.name).create(createDatumDto);
+    return t;
   }
 
-  findAllByApp(app_id: string, app_secret: string) {
-    return this.connection.model(Event.name).find({ app_id, app_secret });
+  findAllByApp(app_id: string) {
+    return this.connection.model(Event.name).find({ app_id });
+  }
+
+  appStat(app_id: string) {
+    const sessionsNumber = this.connection.model(Event.name).find({ app_id }).count();
+
+    return {
+      sessionsNumber,
+    }
+  }
+
+  findEventsByTag(app_id: string, tag: string) {
+    return this.connection.model(Event.name).find(
+      {
+        app_id,
+        tag
+      }
+    );
   }
 
   findAll() {
     return this.connection.model(Event.name).find({});
   }
 
-  findOne(app_id: string, app_secret: string, id: number) {
+  findOne(app_id: string, id: number) {
     return this.connection
       .model(Event.name)
-      .find({ app_id, app_secret, _id: id });
+      .find({ app_id, _id: id });
   }
 
   update(id: string, updateDatumDto: UpdateDatumDto) {

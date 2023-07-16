@@ -15,9 +15,6 @@ import { Tag } from './schemas/tag.schema';
         name: Tag.name,
         useFactory: () => {
           const schema = TagSchema;
-          schema.pre('save', function () {
-            console.log('Hello from pre save');
-          });
           return schema;
         },
         inject: [ConfigService],
@@ -27,4 +24,4 @@ import { Tag } from './schemas/tag.schema';
   controllers: [TagController],
   providers: [TagService, JwtService]
 })
-export class TagModule {}
+export class TagModule { }

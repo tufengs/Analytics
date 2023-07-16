@@ -22,11 +22,19 @@ app.use(
         IDLE_TIMEOUT: 5 * 60 * 1000,
     },
     {
-        pages: [
-            '/',
+        trackMouse: [
             '/about',
-            /^\/article\/[^\/]+$/,
             '/settings',
+        ],
+        trackChange: [
+            {
+                'to': '/404',
+                'tag': 's35df1dg',
+            },
+            {
+                'to': '/',
+                'tag': '64b42d9ea762eac125da32af',
+            },
         ]
     }
 )

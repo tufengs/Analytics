@@ -25,8 +25,7 @@ export class DataController {
   @UseGuards(SecretGuard)
   create(@Headers() headers, @Body() createDatumDto: CreateDatumDto) {
     const app_id = headers['app-id'];
-    const app_secret = headers['app-secret'];
-    createDatumDto = { ...createDatumDto, app_id, app_secret };
+    createDatumDto = { ...createDatumDto, app_id };
     return this.dataService.create(createDatumDto);
   }
 
@@ -36,16 +35,25 @@ export class DataController {
   @UseGuards(SecretGuard)
   findAll(@Headers() headers) {
     const app_id = headers['app-id'];
-    const app_secret = headers['app-secret'];
-    return this.dataService.findAllByApp(app_id, app_secret);
+    return this.dataService.findAllByApp(app_id);
   }
 
-  @Get()
+  @Get('stats')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('WEBMASTER')
   @UseGuards(SecretGuard)
-  getAppStats() {
+  getAppStats(@Headers() headers) {
+    const app_id = headers['app-id'];
+    return this.dataService.appStat(app_id);
+  }
 
+  @Get('/tag/:tag')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('WEBMASTER')
+  @UseGuards(SecretGuard)
+  findEventsByTag(@Headers() headers, @Param('tag') tag: string) {
+    const app_id = headers['app-id'];
+    return this.dataService.findEventsByTag(app_id, tag);
   }
 
   // TODO: Rajouter RoleGuard ADMIN
@@ -60,8 +68,7 @@ export class DataController {
   @UseGuards(SecretGuard)
   findOne(@Headers() headers, @Param('id') id: string) {
     const app_id = headers['app-id'];
-    const app_secret = headers['app-secret'];
-    return this.dataService.findOne(id, app_id, app_secret);
+    return this.dataService.findOne(id, app_id);
   }
 
   @Patch(':id')
@@ -72,7 +79,6 @@ export class DataController {
     @Body() updateDatumDto: UpdateDatumDto,
   ) {
     const app_id = headers['app-id'];
-    const app_secret = headers['app-secret'];
     return this.dataService.update(id, updateDatumDto);
   }
 

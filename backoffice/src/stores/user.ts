@@ -1,7 +1,9 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { clientWithoutAuth, client, token, tokenAsAdmin } from "@/service/axios"
-import type {CreateUserI, LoginUserI, PasswordForgotUserI, UpdateUserI, UserI} from "@/interfaces/user";
+import type { CreateUserI, LoginUserI, PasswordForgotUserI, UpdateUserI, UserI } from "@/interfaces/user";
+import { appId } from '@/service/axios';
+
 export const useUserStore = defineStore('user', () => {
 
   const currentUser = ref<UserI>()
@@ -13,7 +15,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await client.get(`/users/${id}`)
       user.value = res.data;
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -22,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await client.get(`/users`)
       users.value = res.data;
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -31,21 +33,21 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await client.get(`/users/request`)
       users.value = res.data;
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
 
-  const validateUser = async(id: string) => {
+  const validateUser = async (id: string) => {
     try {
       const res = await client.get(`/users/${id}/validate`)
       return res.data
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
 
-  const impersonateUser = async(id: string) => {
+  const impersonateUser = async (id: string) => {
     try {
       const res = await client.get(`/auth/impersonate/${id}`)
       tokenAsAdmin.value = token.value
@@ -61,7 +63,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       token.value = tokenAsAdmin.value
       tokenAsAdmin.value = ''
-      currentUserAdmin.value = null
+      currentUserAdmin.value = undefined
       await profile()
     } catch (e) {
       throw e;
@@ -74,7 +76,7 @@ export const useUserStore = defineStore('user', () => {
       token.value = res.data.access_token;
       await profile();
       return res.data;
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -83,8 +85,9 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await client.get('/auth/profile')
       currentUser.value = res.data;
+      appId.value = res.data.app_id
       return res.data;
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -92,7 +95,7 @@ export const useUserStore = defineStore('user', () => {
   const register = async (payload: CreateUserI): Promise<any> => {
     try {
       const res = await clientWithoutAuth.post('/auth/signup', payload)
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -106,7 +109,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await clientWithoutAuth.patch(`/users`, payload)
       user.value = res.data
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -115,7 +118,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await clientWithoutAuth.patch(`/users/${user_id}`, payload)
       user.value = res.data
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
@@ -123,7 +126,7 @@ export const useUserStore = defineStore('user', () => {
   const passwordForgot = async (payload: PasswordForgotUserI) => {
     try {
       await clientWithoutAuth.post('', payload)
-    } catch ( error ) {
+    } catch (error) {
       throw error;
     }
   }
