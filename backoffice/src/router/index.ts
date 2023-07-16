@@ -53,6 +53,7 @@ const router = createRouter({
         { path: 'funnels', name: 'webmaster-funnels', component: () => import('../views/Webmaster/Funnels.vue')},
         { path: 'tags', name: 'webmaster-tags', component: () => import('../views/Webmaster/Tags.vue')},
         { path: 'profile', name: 'webmaster-profile', component: () => import('../views/Webmaster/Profile.vue')},
+        { path: 'credentials', name: 'webmaster-credentials', component: () => import('../views/Webmaster/Credentials.vue')},
       ],
       meta: {
         requireAuth: true,

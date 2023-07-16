@@ -6,6 +6,13 @@ export interface UserI {
     role: string
     phoneNumber: string
     baseUrl: string
+    application: ApplicationI
+}
+
+export interface ApplicationI {
+    id: string
+    userId: string
+    user: UserI
 }
 
 export interface CreateUserI {

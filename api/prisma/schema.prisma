@@ -37,13 +37,15 @@ model Application {
   userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
   tag    Tag?
-  credentials Credential?
+  credentials Credential[]
 }
 
 model Credential {
   id    String @id @default(uuid()) @db.Uuid
   applicationId String @unique @db.Uuid
   application Application @relation(fields: [applicationId], references: [id])
+  secret String @default(uuid()) @db.Uuid
+  title String
 }
 
 model Preference {

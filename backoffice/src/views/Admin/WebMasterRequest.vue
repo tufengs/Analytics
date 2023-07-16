@@ -79,7 +79,7 @@ onMounted(async () => {
 })
 const handleAcceptRequest = async (id: string) => {
   const res = await validateUser(id)
-  users.value.filter((user: UserI) => user.id !== res.id);
+  await findUsersRequest();
 }
 </script>
 

@@ -91,7 +91,13 @@ const webmaster_path = ref([
     title: 'Profile',
     value: 'profile',
     to: 'webmaster-profile',
-  }
+  },
+  {
+    icon: 'key',
+    title: 'Credentials',
+    value: 'credentials',
+    to: 'webmaster-credentials',
+  },
 ])
 const tab = ref<string>('')
 </script>

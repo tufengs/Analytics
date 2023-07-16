@@ -23,7 +23,8 @@ export class UsersService {
   findAll() {
     return this.prismaService.user.findMany({
       where: {
-        role: "WEBMASTER"
+        role: "WEBMASTER",
+        validated: true
       }
     })
   }
@@ -96,7 +97,7 @@ export class UsersService {
   }
 
   async validateUser(id: string): Promise<any> {
-    const user = this.prismaService.user.update({
+    const user = await this.prismaService.user.update({
       where: {
         id,
       },
@@ -108,7 +109,7 @@ export class UsersService {
       }
     });
 
-    const application = this.prismaService.application.create({
+    const application = await this.prismaService.application.create({
       data: {
         userId: id
       }
