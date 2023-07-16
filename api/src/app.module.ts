@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DataModule } from './event/event.module';
 import { TagModule } from './tag/tag.module';
+import { PreferencesModule } from './preferences/preferences.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TagModule } from './tag/tag.module';
       inject: [ConfigService],
     }),
     TagModule,
+    PreferencesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, ConfigService],
