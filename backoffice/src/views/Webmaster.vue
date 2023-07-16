@@ -1,7 +1,9 @@
 <template>
   <div class="flex pl-64 pt-64">
     <sidebar />
-    <router-view />
+    <div class="w-full px-5">
+      <router-view />
+    </div>
   </div>
 </template>
 

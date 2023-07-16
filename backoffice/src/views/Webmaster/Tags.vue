@@ -1,81 +1,58 @@
 <template>
   <div class="w-full">
-    <div class="text-2xl p-4 font-bold">
-      Page des tags
+    <h2 class="text-slate-800 font-bold pb-3 text-2xl">Tags</h2>
+    <div class="pb-3 flex items-center gap-x-3">
+      <v-text-field  v-model="comment" density="compact" placeholder="Enter tag name" hide-details @keyup.enter="create" />
+      <v-btn @click="create" variant="tonal" color="purple-darken-3">Create</v-btn>
     </div>
-    <div class="p-8 w-full">
-      <v-table>
-        <thead>
-        <tr>
-          <th class="text-center">
-            Email
-          </th>
-          <th class="text-center">
-            N° de tel
-          </th>
-          <th class="text-center">
-            Nom de la société
-          </th>
-          <th class="text-center">
-            Url du site
-          </th>
-          <th class="text-center">
-            KBIS
-          </th>
-          <th class="text-center">
-            Actions
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-          v-for="item in desserts"
-          :key="item.id"
-        >
-          <td>{{ item.email }}</td>
-          <td>{{ item.phoneNumber }}</td>
-          <td>{{ item.company }}</td>
-          <td>{{ item.url }}</td>
-          <td>
-            <div class="flex items-center justify-center">
-              <v-btn
-                icon="mdi-download-box"
-                class="rounded"
-                variant="plain"
-                text="download"
-              />
-            </div>
-          </td>
-          <td>
-            <div class="flex items-center justify-center">
-              <v-btn
-                icon="mdi-account-box"
-                class="rounded"
-                variant="plain"
-                @click="handleImpersonateUser(item.id)"
-              />
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </v-table>
-    </div>
+    <v-list class="grid grid-cols-3 gap-3">
+      <v-list-item v-for="tag in tags" class="shadow-lg rounded-lg !p-6">{{ tag.comment }}
+        <template #subtitle>
+          {{ tag._id }}
+        </template>
+        <template #append>
+          <v-btn @click="copyToClipboard(tag._id)" variant="tonal" color="purple-darken-3" rounded height="40" width="40" class="!p-0">
+            <font-awesome-icon :icon="['fas', 'clipboard']" />
+          </v-btn>
+        </template>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
+import {useTagStore} from "@/stores/tag";
+import { storeToRefs } from "pinia";
+import { createToast } from "mosha-vue-toastify";
+const tagStore = useTagStore();
+const {getTags, createTag} = tagStore;
+const { tags } = storeToRefs(tagStore);
+const comment = ref('');
 
-const desserts = ref([
-  {
-    id: '123',
-    email: 'Frozen Yogurt',
-    phoneNumber: 159,
-    company: 159,
-    kbis: '',
-    url: 159,
-  },
-])
+onMounted(async () => {
+  try {
+    await getTags();
+  } catch (error) {
+    
+  }
+})
+
+const copyToClipboard = (id: string) => {
+  try {
+    navigator.clipboard.writeText(id);
+    createToast('Id copied to clipboard', { type: 'success', position: 'bottom-right' })
+  } catch (error) {
+  }
+}
+const create = async () => {
+  try {
+    await createTag({ comment: comment.value });
+    comment.value = "";
+  } catch (error) {
+    
+  }
+}
 
 const handleImpersonateUser = (id: string) => {
 

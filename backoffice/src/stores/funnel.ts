@@ -1,12 +1,29 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { client } from '@/service/axios'
 
 export const useFunnelStore = defineStore('funnel', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+
+  const funnels = ref([]);
+
+  const getFunnels = async () => {
+    try {
+      const res = await client.get('/funnel');
+      funnels.value = res.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  return { count, doubleCount, increment }
+  const createFunnel = async (funnel: { tags: string[] }) => {
+    try {
+      const res = await client.post('/funnel', funnel);
+      // @ts-ignore
+      funnels.value.push(res.data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  return { getFunnels, createFunnel, funnels }
 })

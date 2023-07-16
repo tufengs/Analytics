@@ -1,15 +1,17 @@
 import axios, { type AxiosInstance } from "axios";
 import { useStorage } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import router from "@/router";
 export const token = useStorage('access_token', '');
 export const tokenAsAdmin = useStorage('access_token_admin', '');
+export const appId = ref('');
 
 const config = computed(() => {
     return {
         baseURL: import.meta.env.VITE_BACKEND_URL,
         headers: {
             "Content-Type": "application/json",
+            "App-Id": "52915a91-cee2-4209-80cc-0667c44c439e"
         }
     }
 });

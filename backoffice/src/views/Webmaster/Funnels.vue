@@ -1,84 +1,73 @@
 <template>
   <div class="w-full">
-    <div class="text-2xl p-4 font-bold">
-      Tunnels de conversion
+    <h2 class="text-slate-800 font-bold text-2xl">Funnels</h2>
+    <div class="pt-3 flex items-center gap-x-3">
+      <v-select 
+        multiple 
+        :items="tags"
+        v-model="tagsToAdd" 
+        placeholder="Select tags"
+        density="compact" 
+        item-title="comment"
+        hide-details
+        return-object 
+      />
+      <v-btn @click="create" variant="tonal" color="purple-darken-3">Create</v-btn>
     </div>
-    <div class="p-8 w-full">
-      <v-table>
-        <thead>
-        <tr>
-          <th class="text-center">
-            Email
-          </th>
-          <th class="text-center">
-            N° de tel
-          </th>
-          <th class="text-center">
-            Nom de la société
-          </th>
-          <th class="text-center">
-            Url du site
-          </th>
-          <th class="text-center">
-            KBIS
-          </th>
-          <th class="text-center">
-            Actions
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-          v-for="item in desserts"
-          :key="item.id"
-        >
-          <td>{{ item.email }}</td>
-          <td>{{ item.phoneNumber }}</td>
-          <td>{{ item.company }}</td>
-          <td>{{ item.url }}</td>
-          <td>
-            <div class="flex items-center justify-center">
-              <v-btn
-                icon="mdi-download-box"
-                class="rounded"
-                variant="plain"
-                text="download"
-              />
-            </div>
-          </td>
-          <td>
-            <div class="flex items-center justify-center">
-              <v-btn
-                icon="mdi-account-box"
-                class="rounded"
-                variant="plain"
-                @click="handleImpersonateUser(item.id)"
-              />
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </v-table>
-    </div>
+
+    <v-list class="grid grid-cols-3 gap-3">
+      <v-list-item v-for="funnel in funnels" class="shadow-lg rounded-lg !p-6">
+        <div v-for="tag in funnel.tags">{{ tag.comment }}</div>
+        <template #subtitle>
+          {{ funnel._id }}
+        </template>
+        <template #append>
+          <!-- <v-btn @click="copyToClipboard(funnel._id)" variant="tonal" color="purple-darken-3" rounded height="40" width="40" class="!p-0">
+            <font-awesome-icon :icon="['fas', 'clipboard']" />
+          </v-btn> -->
+        </template>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
+import {useFunnelStore} from "@/stores/funnel";
+import {useTagStore} from "@/stores/tag";
+import { storeToRefs } from "pinia";
+import { createToast } from "mosha-vue-toastify";
+const funnelStore = useFunnelStore();
+const tagStore = useTagStore();
+const { getTags } = tagStore;
+const {getFunnels, createFunnel} = funnelStore;
+const { funnels } = storeToRefs(funnelStore);
+const tags = ref([]);
+const tagsToAdd = ref([])
 
-const desserts = ref([
-  {
-    id: '123',
-    email: 'Frozen Yogurt',
-    phoneNumber: 159,
-    company: 159,
-    kbis: '',
-    url: 159,
-  },
-])
+onMounted(async () => {
+  try {
+    await getFunnels();
+    tags.value = await getTags();
+  } catch (error) {
+    
+  }
+})
 
-const handleImpersonateUser = (id: string) => {
-
+const copyToClipboard = (id: string) => {
+  try {
+    navigator.clipboard.writeText(id);
+    createToast('Id copied to clipboard', { type: 'success', position: 'bottom-right' })
+  } catch (error) {
+  }
+}
+const create = async () => {
+  try {
+    await createFunnel({ tags: tagsToAdd.value });
+    tagsToAdd.value = [];
+  } catch (error) {
+    
+  }
 }
 </script>
 
